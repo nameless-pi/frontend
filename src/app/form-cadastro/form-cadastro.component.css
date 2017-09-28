@@ -1,0 +1,23 @@
+.form-cadastro{
+    border: 1px solid #ccc;
+    padding: 10px;
+    
+}
+
+.form-cadastro > div > p {
+    width: 100px;
+}
+
+.form-registroID{
+    margin-top: -55px;
+    margin-left: 177px;
+}
+
+.form-user-sala{
+    margin-top: -54px;
+    margin-left: 350px;
+}
+
+.form-buttom{
+    margin-top: 15px;
+}

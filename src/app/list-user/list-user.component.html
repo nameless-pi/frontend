@@ -1,0 +1,34 @@
+<!--Arrumar -  Puxar a lista das user ??
+Ver com o Gabriel oq  precisa colocar aqui
+ - nome do usuario
+ - editar usuario
+ - remover usuario
+
+nao sei se a lista precisa conter todos os dados-->
+
+<div>
+  <h3>Usuarios</h3>
+  <table class="table table-hover">
+    <tr>
+      <th>Tipo</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>RFID</th>
+      <th>Salas Liberadas</th>
+      <th>Outros</th>
+
+    </tr>
+    <!--Arrumar isso dentro de um for e puxar os dados do JSON -->
+    <tr *ngFor="let user of users[0]; let idx = index">
+      <td>{{ user.tipo }}</td>
+      <td>{{ user.nome }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.rfid }}</td>
+      <td>{{ user.acessos | acessos }}</td>
+      <td>
+        <button type="submit" class="btn btn-primary" (click)="showConfirm(idx)">Editar</button>
+        <button type="submit" class="btn btn-danger" (click)="apagarUsuario(idx)">Deletar</button>
+      </td>
+    </tr>
+  </table>
+</div>

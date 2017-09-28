@@ -1,0 +1,11 @@
+.form-registro-sala{
+    border: 1px solid #ccc; 
+    padding: 10px;
+}
+.nome-sala{
+    width: 500px;
+}
+
+.form-buttom-sala{
+    margin-top: 15px;
+}

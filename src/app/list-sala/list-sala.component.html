@@ -1,0 +1,28 @@
+
+<!--Arrumar -  Puxar a lista das salas ?? 
+Ver com o Gabriel oq precisa colocar aqui
+ - nome da sala
+ - editar sala
+ - remover sala
+  
+nao sei se a lista de qm pode entrar tbm vai estar aqui-->
+<div>
+  <h3>Salas</h3>
+  <table class="table table-hover">
+    <tr>
+      <th>Nome</th>
+      <th>Horarios</th>
+      <th>Outros</th>
+
+    </tr>
+    <!--Arrumar isso dentro de um for e puxar os dados do JSON --> 
+    <tr *ngFor="let sala of salas[0]; let idx = index">
+      <td>{{ sala.nome }}</td>
+      <td>{{ sala.horarios | horarios }}</td>
+      <td>
+        <button type="submit" class="btn btn-primary">Editar</button>
+        <button type="submit" class="btn btn-danger" (click)="deletarSala(idx)">Excluir</button>
+      </td>
+    </tr>
+  </table>
+</div>

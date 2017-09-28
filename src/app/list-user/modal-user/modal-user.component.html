@@ -1,0 +1,40 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" (click)="close()" >&times;</button>
+         <h4 class="modal-title">{{ title }}</h4>
+       </div>
+       <div class="modal-body">
+         <form>
+          <div class="form-group">
+            <label>ID</label>
+            <input class="form-control" type="text" [value]="user.id" readonly>
+          </div>
+          <div class="form-group">
+            <label>Nome</label>
+            <input class="form-control" type="text" [value]="user.nome">
+          </div>
+          <div class="form-group">            
+            <label>Tipo</label>
+            <select class="form-control">
+              <option *ngFor="let type of typeUsers" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Acessos</label>
+            <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems"
+              [settings]="dropdownSettings">
+            </angular2-multiselect>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" type="text" value="{{ user.email }}">
+          </div>
+         </form>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-primary" (click)="confirm()">Editar</button>
+         <button type="button" class="btn btn-default" (click)="close()" >Cancelar</button>
+       </div>
+     </div>
+  </div>

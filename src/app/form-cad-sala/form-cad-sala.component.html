@@ -1,0 +1,14 @@
+<form class="form-registro-sala">
+    <h3>Cadastrar Salas</h3>    
+    <div class="form-nome-sala">
+      <label>Nome</label>
+      <input type="text" class="nome-sala form-control" id="nome-sala" #sala>
+    </div>
+
+    <!--Arrumar -  Oque mais vai aqui ?? -->
+
+    <div class="form-buttom-sala">
+      <button type="submit" class="btn btn-success" (click)="cadastrar(sala.value)">Cadastrar</button>
+      <button type="submit" class="btn btn-danger">Excluir</button>
+    </div>
+</form>

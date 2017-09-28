@@ -1,0 +1,49 @@
+<form  class="form-cadastro">
+    <h3>Cadastrar Usuários</h3>        
+    <div class="form-tipo-user form-group">
+        <label>Tipo Usuário:</label>
+        <select name="Cadastro Usuario" class="tipo_user form-control" >
+            <option value="adm">Administrador</option>
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+            <option value="servidor">Servidor</option>
+        </select>
+    </div>
+
+    <!--Arruma - quais campos musam de acordo com o tipo do usuario?? -->
+    
+    <div class="form-nome-user ">
+        <label>Nome:</label>    
+        <input type="text" name="nome_user" class="nome_user form-control" style="width: 500px; " />    
+    </div>
+        
+    <div class="form-email-user " >
+        <label>Email:</label>
+        <input type="text" name="e-mail_user" class="e-mail_user form-control" style="width: 500px;" />
+        
+    </div>
+    <div class="form-registro ">
+        <label>RA:</label>
+        <input type="text" name="ra_user" class="ra_user form-control" style=" width: 150px;" />
+    </div>
+    <div class="form-registroID">   
+        <label>RFID:</label>
+        <input type="text" name="rfid_user" class="rfid_user form-control" style=" width: 150px;" />
+        
+    </div> 
+    <div class="form-user-sala ">
+        <label>Sala</label>
+        <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems"
+        [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings">
+        </angular2-multiselect>
+        
+    </div> 
+    
+        
+    <div class="form-buttom ">
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+        <button type="submit" class="btn btn-danger">Cancelar</button>
+        
+    </div>
+        
+</form>
