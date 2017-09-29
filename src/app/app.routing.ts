@@ -20,6 +20,7 @@ const APP_ROUTERS: Routes = [
   { path: '' , component: LoginComponent},
   { path: '**' , component: PaginaErroComponent}
   
+
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTERS);

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes} from '@angular/router';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
@@ -21,10 +22,10 @@ import { ModalUserComponent } from './list-user/modal-user/modal-user.component'
 import { FormDebugComponent } from './form-debug/form-debug.component';
 
 import { DatabaseService } from './servicos/database.service';
-
 import { AcessosPipe } from './pipes/acessos.pipe';
 import { HorariosPipe } from './pipes/horarios.pipe';
 import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component';
+
 
 @NgModule({
   declarations: [
@@ -41,11 +42,13 @@ import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component'
     PaginaErroComponent,
     FormDebugComponent,
     ModalSalaComponent
+
   ],
   imports: [
     FormsModule,
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     AngularMultiSelectModule,
     BootstrapModalModule.forRoot({container: document.body}),
     routing
