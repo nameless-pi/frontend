@@ -30,7 +30,7 @@ export class ListUserComponent implements OnInit {
   showConfirm(index) {
     const disposable = this.dialogService.addDialog(ModalUserComponent, {
         title: 'Usuário - Editar',
-        user: this.users[0][index]
+        user: this.users[0][index],
       })
         .subscribe((isConfirmed) => {});
     // setTimeout(() => {

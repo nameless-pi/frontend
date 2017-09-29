@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
+import { DatabaseService } from '../../servicos/database.service';
 
 
 export interface ConfirmModel {
@@ -16,12 +17,32 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
   title: string;
   user: any;
   dropdownSettings: { singleSelection: boolean; text: string; selectAllText: string; unSelectAllText: string; };
-  dropdownList: { sala: string; }[];
+  dropdownList = [];
   selectedItems = [];
   typeUsers = ['Aluno', 'Professor', 'Servente'];
 
-  constructor(dialogService: DialogService) {
+  constructor(private dbService: DatabaseService, dialogService: DialogService) {
     super(dialogService);
+  }
+
+  ngOnInit() {
+    this.dbService.getSalasSelect()
+    .subscribe((data: Array<any>) => {
+      for (let i = 0; i < data.length; i++) {
+          this.dropdownList.push({'id': i + 1, 'itemName': data[i].nome});
+      }
+    });
+
+    for (let i = 0; i < this.user.acessos.length; i++) {
+      this.selectedItems.push({'id': i + 1, 'itemName': this.user.acessos[i].nome_sala});
+    }
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      text: 'Selecione as salas',
+      selectAllText: 'Todas',
+      unSelectAllText: 'Nenhuma',
+    };
   }
 
   confirm() {
@@ -31,6 +52,5 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
     this.close();
   }
 
-  ngOnInit() {}
 
 }
