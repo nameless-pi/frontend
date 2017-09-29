@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 
 
