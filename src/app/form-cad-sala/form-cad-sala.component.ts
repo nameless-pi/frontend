@@ -43,6 +43,8 @@ export class FormCadSalaComponent implements OnInit {
 
       alert( 'Dado não encontrado!' );
 
+    }else if ( errMsg === '0') {
+      alert('Erro de conexão, tente novamente!');
     }
   return Observable.throw(errMsg);
   }
