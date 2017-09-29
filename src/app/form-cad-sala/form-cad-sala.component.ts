@@ -48,5 +48,5 @@ export class FormCadSalaComponent implements OnInit {
   return Observable.throw(errMsg);
   }
 
-
+  }
 }
