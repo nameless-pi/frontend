@@ -2,6 +2,10 @@
     border: 1px solid red;
 }
 
+.container{
+    margin-top: 15px;
+}
+
 .form-cadastro{
     border: 1px solid #ccc;
     padding: 10px;

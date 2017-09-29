@@ -20,6 +20,7 @@ import { HorariosPipe } from './pipes/horarios.pipe';
 import { ModalUserComponent } from './list-user/modal-user/modal-user.component';
 import { DatabaseService } from './servicos/database.service';
 import { routing } from './app.routing';
+import { PaginaErroComponent } from './pagina-erro/pagina-erro.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { routing } from './app.routing';
     FormCadSalaComponent,
     AcessosPipe,
     HorariosPipe,
-    ModalUserComponent
+    ModalUserComponent,
+    PaginaErroComponent
   ],
   imports: [
     FormsModule,
