@@ -20,7 +20,6 @@ import { FormCadSalaComponent } from './form-cad-sala/form-cad-sala.component';
 import { FormCadastroComponent } from './form-cadastro/form-cadastro.component';
 import { ModalUserComponent } from './list-user/modal-user/modal-user.component';
 
-import { LoginService } from './servicos/login.service';
 import { DatabaseService } from './servicos/database.service';
 
 import { AcessosPipe } from './pipes/acessos.pipe';
@@ -52,7 +51,7 @@ import { FormDebugComponent } from './form-debug/form-debug.component';
     routing
   ],
   entryComponents: [ModalUserComponent],
-  providers: [DatabaseService, LoginService],
+  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
