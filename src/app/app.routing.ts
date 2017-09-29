@@ -9,14 +9,12 @@ import { PaginaErroComponent } from './pagina-erro/pagina-erro.component';
 import { FormCadSalaComponent } from './form-cad-sala/form-cad-sala.component';
 import { FormCadastroComponent } from './form-cadastro/form-cadastro.component';
 
-/*Naaaaaaaaaaaaaao mudar a ordem dos caminhos*/
-
 const APP_ROUTERS: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'list-sala', component: ListSalaComponent },
   { path: 'list-user', component: ListUserComponent },
-  { path: 'form-cad-sala', component: FormCadSalaComponent },
-  { path: 'form-cadastro', component: FormCadastroComponent },
+  { path: 'cadastro-sala', component: FormCadSalaComponent },
+  { path: 'cadastro-usuario', component: FormCadastroComponent },
   { path: '' , component: LoginComponent},
   { path: '**' , component: PaginaErroComponent}
   
