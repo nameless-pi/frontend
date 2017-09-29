@@ -9,20 +9,17 @@ import { DatabaseService } from './../servicos/database.service';
   styleUrls: ['./form-cad-sala.component.css']
 })
 export class FormCadSalaComponent implements OnInit {
-  constructor(private dbService: DatabaseService) { }
 
+  constructor(private dbService: DatabaseService) { }
   ngOnInit() {}
 
   onSubmit(form) {
-    console.log(form);
-  }
+    if (form.valid) {
+      const sala = form.value.nome;
 
-  cadastrar(sala) {
-    if (sala.value.nome_sala.length === 4) {
-      this.dbService.cadastrarSala({'nome': sala.value.nome_sala})
+      this.dbService.cadastrarSala({'nome': sala})
       .subscribe();
-    } else {
-      alert('O nome da sala só pode ter 4 caracteres, tente novamente.');
     }
+    form.reset();
   }
 }

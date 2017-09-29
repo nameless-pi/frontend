@@ -1,17 +1,19 @@
 <app-home></app-home>
 
 <div class="container">
-  <form class="form-registro-sala" #fSala="ngForm" (ngSubmit)="onSubmit(fSala)">
+  <form class="form-registro-sala" #formSala="ngForm" (ngSubmit)="onSubmit(formSala)">
       <h3>Cadastrar Salas</h3>    
       <div class="form-nome-sala form-group">
         <label>Nome</label>
-        <input type="text" name="nome_sala" 
-          class="nome-sala form-control" ngModel required>
+        <input type="text" name="nome" class="nome-sala form-control"
+          placeholder="E001" ngModel required pattern="([B-Z])\d\w{2,2}">
       </div>
 
       <div class="form-buttom-sala form-group">
-        <button type="submit" class="btn btn-success" [disabled]="!fSala.valid">Cadastrar</button>
-        <button type="submit" class="btn btn-danger">Excluir</button>
+        <button type="submit" class="btn btn-success" [disabled]="!formSala.valid">Cadastrar</button>
+        <button type="submit" class="btn btn-danger">Cancelar</button>
       </div>
   </form>
+
+  <app-form-debug [form]="formSala"></app-form-debug>
 </div>
