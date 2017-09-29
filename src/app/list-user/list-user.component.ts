@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogService } from 'ng2-bootstrap-modal';
-import { ModalUserComponent } from './modal-user/modal-user.component';
 
 import { DatabaseService } from '../servicos/database.service';
+import { ModalUserComponent } from './modal-user/modal-user.component';
 
 @Component({
   selector: 'app-list-user',

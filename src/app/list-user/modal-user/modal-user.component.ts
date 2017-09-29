@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
-import { DatabaseService } from '../../servicos/database.service';
 
+import { DatabaseService } from '../../servicos/database.service';
 
 export interface ConfirmModel {
   title: string;
@@ -17,6 +17,7 @@ export interface ConfirmModel {
 export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel, OnInit {
   title: string;
   user: any;
+
   dropdownSettings: { singleSelection: boolean; text: string; selectAllText: string; unSelectAllText: string; };
   dropdownList = [];
   selectedItems = [];
@@ -42,7 +43,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
       singleSelection: false,
       text: 'Selecione as salas',
       selectAllText: 'Todas',
-      unSelectAllText: 'Nenhuma',
+      unSelectAllText: 'Nenhuma'
     };
   }
 
@@ -52,6 +53,4 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
     this.result = true;
     this.close();
   }
-
-
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { $ } from 'protractor';
-
 
 @Component({
   selector: 'app-home',
@@ -9,29 +7,10 @@ import { $ } from 'protractor';
 })
 
 export class HomeComponent implements OnInit {
-  static module(arg0: any, arg1: any): any {
-    throw new Error("Method not implemented.");
-  }
+  constructor() {}
+  ngOnInit() {}
 
-  constructor() {
-    
+  onClick(aba) {
+    aba.css('display: block');
   }
-   
-  
-  onClick(aba) { 
-    /*HomeComponent.module('home-menu', []).controller('mostraAba', ['$scope', function ($scope) {
-      $scope.escondeAba = true;
-      console.log($scope.escondeAba);
-      $scope.escondeAba = function(){
-        return $scope.escondeAba ? true : false;
-      };
-    }]);*/
-    aba.css("display: block");    
-   }
-  
-  ngOnInit() {
-    
-    
-  }
-  
 }

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AcessosPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (value.length === 0) {
+    if (!value.length) {
       return 'Nenhuma';
     }
 

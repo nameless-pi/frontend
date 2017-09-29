@@ -8,8 +8,5 @@ import { Component, OnInit } from '@angular/core';
 export class PaginaErroComponent implements OnInit {
 
   constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

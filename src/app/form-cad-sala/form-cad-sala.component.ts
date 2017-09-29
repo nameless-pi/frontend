@@ -1,6 +1,7 @@
-import { DatabaseService } from './../servicos/database.service';
 import { FormsModule } from '@angular/forms';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { DatabaseService } from './../servicos/database.service';
 
 @Component({
   selector: 'app-form-cad-sala',
@@ -8,17 +9,20 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./form-cad-sala.component.css']
 })
 export class FormCadSalaComponent implements OnInit {
-  @ViewChild('sala') btn: ElementRef;
-
   constructor(private dbService: DatabaseService) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onSubmit(form) {
+    console.log(form);
   }
 
   cadastrar(sala) {
-    if (sala.length === 4) {
-      this.dbService.cadastrarSala({'nome': sala})
+    if (sala.value.nome_sala.length === 4) {
+      this.dbService.cadastrarSala({'nome': sala.value.nome_sala})
       .subscribe();
-    } else {}
+    } else {
+      alert('O nome da sala só pode ter 4 caracteres, tente novamente.');
+    }
   }
 }

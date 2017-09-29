@@ -1,15 +1,16 @@
 <app-home></app-home>
 
 <div class="container">
-  <form class="form-registro-sala" #fSala="ngForm">
+  <form class="form-registro-sala" #fSala="ngForm" (ngSubmit)="onSubmit(fSala)">
       <h3>Cadastrar Salas</h3>    
       <div class="form-nome-sala form-group">
         <label>Nome</label>
-        <input type="text" name="nome_sala" class="nome-sala form-control" id="nome-sala" ngModel required>
+        <input type="text" name="nome_sala" 
+          class="nome-sala form-control" ngModel required>
       </div>
 
       <div class="form-buttom-sala form-group">
-        <button type="submit" class="btn btn-success" (click)="cadastrar(sala.value)" [disabled]="!fSala.valid">Cadastrar</button>
+        <button type="submit" class="btn btn-success" [disabled]="!fSala.valid">Cadastrar</button>
         <button type="submit" class="btn btn-danger">Excluir</button>
       </div>
   </form>

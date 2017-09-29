@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../servicos/database.service';
 
+import { DatabaseService } from '../servicos/database.service';
 
 @Component({
   selector: 'app-list-sala',

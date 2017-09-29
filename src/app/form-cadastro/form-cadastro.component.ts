@@ -1,7 +1,7 @@
-import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DatabaseService } from '../servicos/database.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
+import { DatabaseService } from '../servicos/database.service';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -9,6 +9,7 @@ import { DatabaseService } from '../servicos/database.service';
   styleUrls: ['./form-cadastro.component.css']
 })
 export class FormCadastroComponent implements OnInit {
+  @ViewChild('valuesForm') form: ElementRef;
   dropdownSettings: { singleSelection: boolean; text: string; selectAllText: string; unSelectAllText: string; };
   dropdownList = [];
   selectedItems = [];
@@ -40,29 +41,21 @@ export class FormCadastroComponent implements OnInit {
     });
   }
 
-  @ViewChild('valuesForm') form: ElementRef;
-  selectForm(form){
+  selectForm(form) {
     for (let i = 0; i < this.selectedItems.length; i++) {
       this.salas.push(this.selectedItems[i].itemName);
     }
 
     this.forme = {
-      "nome": form.nome_user.value,
-      "tipo": form.CadastroUsuario.value,
-      "email": form.email_user.value,
-      "rfid": form.rfid_user.value,
-      "salas": this.salas
+      'nome': form.nome_user.value,
+      'tipo': form.CadastroUsuario.value,
+      'email': form.email_user.value,
+      'rfid': form.rfid_user.value,
+      'salas': this.salas
     };
     console.log(this.forme);
     this.salas = [];
-    var c;
-    c = this.dbService.cadastrarUsuario(this.forme);
-    c.subscribe();
-    
-    if(c == "201"){
-      alert("DEEEUU CERTO");
-     
-    }else
-      alert("tente mais uma vez amiguinho!");
+    this.dbService.cadastrarUsuario(this.forme)
+      .subscribe();
   }
 }

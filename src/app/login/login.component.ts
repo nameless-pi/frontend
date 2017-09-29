@@ -1,11 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 import { routing } from '../app.routing';
-
-
-
-
 
 @Component({
   selector: 'app-login',
@@ -18,11 +14,6 @@ export class LoginComponent implements OnInit {
   loading = false;
   error = '';
 
-  constructor() {
-
-   }
-
-  ngOnInit() {
-  }
-
+  constructor() {}
+  ngOnInit() {}
 }
