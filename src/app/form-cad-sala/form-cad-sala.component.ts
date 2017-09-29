@@ -19,7 +19,7 @@ export class FormCadSalaComponent implements OnInit {
     if (form.valid) {
       const sala = form.value.nome;
 
-      this.dbService.cadastrarSala({'nome': sala}).catch(this.handleError)
+      this.dbService.cadastrarSala({'nome': sala}).catch(this.handleError).catch(this.handleError)
       .subscribe();
     }
     form.reset();
@@ -45,7 +45,6 @@ export class FormCadSalaComponent implements OnInit {
 
     }else if ( errMsg === '0') {
       alert('Erro de conexão, tente novamente!');
-    }
   return Observable.throw(errMsg);
   }
 

@@ -35,7 +35,7 @@ export class FormCadastroComponent implements OnInit {
   }
 
   fillSelect() {
-    this.dbService.getSalasSelect()
+    this.dbService.getSalasSelect().catch(this.handleError)
     .subscribe((data: Array<any>) => {
       for (let i = 0; i < data.length; i++) {
           this.dropdownList.push({'id': i + 1, 'itemName': data[i].nome});
