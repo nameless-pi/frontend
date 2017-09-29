@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { routing } from '../app.routing';
+
+
+
 
 
 @Component({
@@ -21,7 +25,4 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login(){
-    this.router.navigate(['/abre-home']);
-  }
 }

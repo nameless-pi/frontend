@@ -1,14 +1,16 @@
   <div id="menu">  
     <ul ng-app="home-menu">
-        <li><a href="#">Home</a></li>
+        <li><a routerLink="/home">Home</a></li>
         <li ng-controller="mostraAba">
-          <a ng-hide="onClick($mostra_menu_home)">Cadastro</a> 
+          <a (click)="onClick(aba)">Cadastro</a> 
         </li>
         <li><a routerLink="/list-sala">Salas</a></li>
         <li><a routerLink="/list-user">Usuários</a></li>
+        <!--colocar o link para o login quando clicar aqui-->
+        <li><a routerLink="/" class="sair">Sair</a></li>
       </ul>            
       
-    <div id="aba" ng-click="aba" ng-hide="escondeAba" >
+    <div id="aba" ng-click="aba" ng-hide="escondeAba" #aba style="display: none;">
       <ul id="cad-menu">
         <li><a class="cad-user" routerLink="/form-cadastro">Usuário</a></li>
         <li><a class="cad-sala" routerLink="/form-cad-sala">Sala</a></li>

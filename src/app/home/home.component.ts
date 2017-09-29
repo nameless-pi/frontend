@@ -18,13 +18,15 @@ export class HomeComponent implements OnInit {
   }
    
   
-  onClick(mostra_menu_home) { 
-    HomeComponent.module('home-menu', []).controller('mostraAba', ['$scope', function ($scope) {
-    //  $scope.escondeAba = false;
+  onClick(aba) { 
+    /*HomeComponent.module('home-menu', []).controller('mostraAba', ['$scope', function ($scope) {
+      $scope.escondeAba = true;
+      console.log($scope.escondeAba);
       $scope.escondeAba = function(){
         return $scope.escondeAba ? true : false;
       };
-    }]);
+    }]);*/
+    aba.css("display: block");    
    }
   
   ngOnInit() {

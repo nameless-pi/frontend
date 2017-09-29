@@ -1,14 +1,17 @@
-<form  class="form-cadastro" #f = "ngForm" (ngSubmit)="postNewUser(f)">
+
+<form  class="form-cadastro" #valuesForm = "ngForm">
     <h3>Cadastrar Usuários</h3>        
     <div class="form-tipo-user form-group">
         <label>Tipo Usuário:</label>
-        <select name="CadastroUsuario" class="tipo_user form-control" style="width: 500px;">
+        <select name="CadastroUsuario" class="tipo_user form-control" style="width: 500px;" >
             <option value="adm">Administrador</option>
             <option value="aluno">Aluno</option>
             <option value="professor">Professor</option>
             <option value="servidor">Servidor</option>
         </select>
     </div>
+
+    <!--Arruma - quais campos musam de acordo com o tipo do usuario?? -->
     
     <div class="form-nome-user form-group">
         <label>Nome:</label>    
@@ -17,15 +20,9 @@
         
     <div class="form-email-user form-group" >
         <label>Email:</label>
-        <input type="email" name="e-mail_user" class="e-mail_user form-control" style="width: 500px;" ngModel required email/>
+        <input type="email" name="email_user" class="e-mail_user form-control" style="width: 500px;" ngModel required email/>
         
     </div>
-    <!--
-    <div class="form-registro form-group">
-        <label>RA:</label>
-        <input type="text" name="ra_user" class="ra_user form-control" style=" width: 150px;" ngModel/>
-    </div>
-    -->
     <div class="form-registroID form-group">   
         <label>RFID:</label>
         <input type="text" name="rfid_user" class="rfid_user form-control" style=" width: 150px;" ngModel required/>
@@ -40,10 +37,9 @@
     </div> 
     
         
-    <div class="form-buttom form-group">
-        <button type="submit" class="btn btn-success" [disabled]="!f.valid">Cadastrar</button>
+    <div class="form-buttom ">
+        <button type="submit" class="btn btn-success" (click)="selectForm(valuesForm)" [disabled]="!valuesForm.valid">Cadastrar</button>
         <button type="submit" class="btn btn-danger">Cancelar</button>
-        
     </div>
         
 </form>

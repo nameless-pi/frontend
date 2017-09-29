@@ -19,15 +19,7 @@ import { AcessosPipe } from './pipes/acessos.pipe';
 import { HorariosPipe } from './pipes/horarios.pipe';
 import { ModalUserComponent } from './list-user/modal-user/modal-user.component';
 import { DatabaseService } from './servicos/database.service';
-
-
-const appRoutes: Routes = [
-  { path: 'form-cadastro', component: FormCadastroComponent },
-  { path: 'list-sala', component: ListSalaComponent },
-  { path: 'list-user', component: ListUserComponent },
-  { path: 'form-cad-sala', component: FormCadSalaComponent },
-  { path: 'abre-home', component: HomeComponent }
-];
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -49,9 +41,7 @@ const appRoutes: Routes = [
     HttpModule,
     AngularMultiSelectModule,
     BootstrapModalModule.forRoot({container: document.body}),
-    RouterModule.forRoot(
-      appRoutes, { enableTracing: true}
-    )
+    routing
   ],
   entryComponents: [ModalUserComponent],
   providers: [DatabaseService],

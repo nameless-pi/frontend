@@ -8,6 +8,11 @@ export class DatabaseService {
 
   constructor(private http: HttpClient) { }
 
+  cadastrarUsuario(usuario){
+    return this.http
+      .post(APP_SERVER+'users',usuario);
+  }
+
   getUsuarios() {
     return this.http
       .get(APP_SERVER + 'users');
