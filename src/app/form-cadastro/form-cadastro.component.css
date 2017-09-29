@@ -1,3 +1,7 @@
+.ng-invalid.ng-touched:not(form){
+    border: 1px solid red;
+}
+
 .form-cadastro{
     border: 1px solid #ccc;
     padding: 10px;
@@ -7,15 +11,15 @@
 .form-cadastro > div > p {
     width: 100px;
 }
-
+/*
 .form-registroID{
     margin-top: -55px;
     margin-left: 177px;
 }
-
+*/
 .form-user-sala{
-    margin-top: -54px;
-    margin-left: 350px;
+    margin-top: -75px;
+    margin-left: 177px;
 }
 
 .form-buttom{

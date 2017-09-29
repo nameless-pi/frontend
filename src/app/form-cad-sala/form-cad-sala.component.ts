@@ -1,4 +1,5 @@
 import { DatabaseService } from './../servicos/database.service';
+import { FormsModule } from '@angular/forms';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
