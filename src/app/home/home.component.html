@@ -1,24 +1,23 @@
-<div id="menu">  
+  <div id="menu">  
     <ul ng-app="home-menu">
-      <li><a href="#">Home</a></li>
-      <li ng-controller="mostraAba">
-        <a ng-hide="onClick($mostra_menu_home)">Cadastro</a> 
-      </li>
-      <li><a routerLink="/list-sala">Salas</a></li>
-      <li><a routerLink="/list-user">Usuários</a></li>
-    </ul>            
-    
-  <div id="aba" ng-click="aba" ng-hide="escondeAba" >
-    <ul id="cad-menu">
-      <li><a class="cad-user" routerLink="/form-cadastro">Usuário</a></li>
-      <li><a class="cad-sala" routerLink="/form-cad-sala">Sala</a></li>
-    </ul>
-    
+        <li><a href="#">Home</a></li>
+        <li ng-controller="mostraAba">
+          <a ng-hide="onClick($mostra_menu_home)">Cadastro</a> 
+        </li>
+        <li><a routerLink="/list-sala">Salas</a></li>
+        <li><a routerLink="/list-user">Usuários</a></li>
+      </ul>            
+      
+    <div id="aba" ng-click="aba" ng-hide="escondeAba" >
+      <ul id="cad-menu">
+        <li><a class="cad-user" routerLink="/form-cadastro">Usuário</a></li>
+        <li><a class="cad-sala" routerLink="/form-cad-sala">Sala</a></li>
+      </ul>
+      
+    </div>
+      
+    <div class="container" >
+      <!--<app-form-cadastro *ngSwitchCase="'Cadastro'"></app-form-cadastro>-->
+      <router-outlet></router-outlet>
+    </div>
   </div>
-    
-  <div class="container" >
-    <!--<app-form-cadastro *ngSwitchCase="'Cadastro'"></app-form-cadastro>-->
-    <router-outlet></router-outlet>
-  </div>
-</div>
-

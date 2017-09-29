@@ -1,21 +1,22 @@
 <div class="container text-center">
-    <form class="form-horizontal" >
+    <form class="form-horizontal" #fLogin = "ngForm" (ngSubmit)="onSubmit(fLogin)">
         <div class="text-center">
             <h3>Controle de Portas</h3>
             <hr style="width: 80%;">
         </div>
-        <div class="login-menu">
-            <input type="text" name="email" class="form-control" id="email"
-                placeholder="e-mail" required autofocus>
+        <div class="login-menu form-group">
+            <input type="email" name="email" class="form-control" id="email"
+                placeholder="e-mail" ngModel required email autofocus>
         </div>
-        <div class="login-menu">
+        <div class="login-menu form-group">
             <input type="password" name="password" class="form-control" id="password"
-            placeholder="senha" required>
+            placeholder="senha" ngModel required>
         </div>
         <div class="">
-            <!-- Arumar - colocar o caminho para a home dentro do botao -->
-            <button type="submit" class="btn btn-success">Login</button>
+            <!-- Arumar - colocar o caminho para a home dentro do botao routerLink="/abre-home" -->
+            <button type="submit" name="login" class="btn btn-success"  [disabled]="!fLogin.valid">Login</button>
             
         </div>
     </form>
 </div>
+
