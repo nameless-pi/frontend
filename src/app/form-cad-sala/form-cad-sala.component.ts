@@ -45,8 +45,7 @@ export class FormCadSalaComponent implements OnInit {
 
     }else if ( errMsg === '0') {
       alert('Erro de conexão, tente novamente!');
+    }
   return Observable.throw(errMsg);
-  }
-
   }
 }
