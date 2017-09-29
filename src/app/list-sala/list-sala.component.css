@@ -1,3 +1,21 @@
 .container{
     margin-top: 15px;
+    border: 1px solid #ccc;
+    margin-left: 75px;
+}
+
+.horario_sala{
+    border-left: 1px solid #ccc;
+}
+
+.button_salas{
+    margin-top: 50px;
+    float: right;
+    margin-bottom: 15px;
+}
+
+.list_nome_sala > li{
+    list-style: none;
+    margin-left: -40px;
+    border-top: 1px solid #ccc;
 }

@@ -19,12 +19,13 @@ import { PaginaErroComponent } from './pagina-erro/pagina-erro.component';
 import { FormCadSalaComponent } from './form-cad-sala/form-cad-sala.component';
 import { FormCadastroComponent } from './form-cadastro/form-cadastro.component';
 import { ModalUserComponent } from './list-user/modal-user/modal-user.component';
+import { FormDebugComponent } from './form-debug/form-debug.component';
 
 import { DatabaseService } from './servicos/database.service';
-
 import { AcessosPipe } from './pipes/acessos.pipe';
 import { HorariosPipe } from './pipes/horarios.pipe';
-import { FormDebugComponent } from './form-debug/form-debug.component';
+import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { FormDebugComponent } from './form-debug/form-debug.component';
     HorariosPipe,
     ModalUserComponent,
     PaginaErroComponent,
-    FormDebugComponent
+    FormDebugComponent,
+    ModalSalaComponent
+
   ],
   imports: [
     FormsModule,
