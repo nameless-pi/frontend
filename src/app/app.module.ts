@@ -25,7 +25,8 @@ const appRoutes: Routes = [
   { path: 'form-cadastro', component: FormCadastroComponent },
   { path: 'list-sala', component: ListSalaComponent },
   { path: 'list-user', component: ListUserComponent },
-  { path: 'form-cad-sala', component: FormCadSalaComponent }
+  { path: 'form-cad-sala', component: FormCadSalaComponent },
+  { path: 'abre-home', component: HomeComponent }
 ];
 
 @NgModule({
