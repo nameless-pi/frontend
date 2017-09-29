@@ -47,10 +47,34 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
     };
   }
 
-  confirm() {
-    // we set dialog result as true on click on confirm button,
-    // then we can get dialog result from caller code
-    this.result = true;
+  onSubmit(form) {
+    if (form.valid) {
+      const user = form.value;
+      let body = {};
+      this.user.acessos = [];
+
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        this.user.acessos.push(this.selectedItems[i].itemName);
+      }
+
+      body = {
+        'nome': user.nome,
+        'tipo': user.tipo,
+        'email': user.email,
+        'rfid': user.rfid,
+        'salas': this.user.acessos
+      };
+
+      this.dbService.editarUsuario(user.id, body)
+        .subscribe();
+    }
     this.close();
   }
+
+  // confirm() {
+  //   // we set dialog result as true on click on confirm button,
+  //   // then we can get dialog result from caller code
+  //   this.result = true;
+  //   this.close();
+  // }
 }
