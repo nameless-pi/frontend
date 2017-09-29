@@ -12,11 +12,12 @@ import { FormCadastroComponent } from './form-cadastro/form-cadastro.component';
 const APP_ROUTERS: Routes = [
   { path: '' , component: LoginComponent},
   { path: 'home', component: HomeComponent },
-  { path: '**' , component: PaginaErroComponent},
   { path: 'list-sala', component: ListSalaComponent },
   { path: 'list-user', component: ListUserComponent },
-  { path: 'form-cad-sala', component: FormCadSalaComponent },
-  { path: 'form-cadastro', component: FormCadastroComponent }
+  { path: 'cadastro-sala', component: FormCadSalaComponent },
+  { path: 'cadastro-usuario', component: FormCadastroComponent },
+
+  { path: '**' , component: PaginaErroComponent}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTERS);
