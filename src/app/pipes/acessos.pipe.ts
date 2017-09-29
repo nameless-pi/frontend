@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AcessosPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (!value.legth) {
+    if (value.length === 0) {
       return 'Nenhuma';
     }
 
@@ -18,8 +18,6 @@ export class AcessosPipe implements PipeTransform {
         acessos += value[i].nome_sala + ']';
       }
     }
-
     return acessos;
   }
-
 }
