@@ -5,8 +5,8 @@
   <div class="layer_sala col-md-3">
     <h3>Salas</h3>
     <ul class="list_nome_sala">
-      <li class="li_sala">
-          <p>nomeSala</p>
+      <li class="li_sala" *ngFor="let sala of salas[0]" >
+          <a (click)="onclick(sala.nome)">{{ sala.nome }}</a>
       </li>
     </ul>
   </div>
@@ -14,18 +14,18 @@
     <h3>Horários</h3>
     <table class="table table-hover">
       <tr>
+        <th>Dia</th>
         <th>Horario Inicio</th>
         <th>Horario Fim</th>
-        <th>Dia</th>
-        <th>Usuáros</th>
+        <th>Tipo Permitido</th>
         <th>Outros</th>
       </tr>
       
-      <tr class="dados_sala">
-        <td>horarioInicio</td>
-        <td>horarioFim</td>
-        <td>dia</td>
-        <td>user</td>
+      <tr class="dados_sala" *ngFor="let horario of (id != -1 ? salas[0][id].horarios : [])">
+        <td>{{ horario.dia }}</td>
+        <td>{{ horario.hora_inicio }}</td>
+        <td>{{ horario.hora_fim }}</td>
+        <td>{{ horario.tipo_user }}</td>
         <td>
           <button type="submit" class="btn btn-primary">Editar Horario</button>
           <button type="submit" class="btn btn-danger">Excluir Horario</button>

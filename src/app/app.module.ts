@@ -42,16 +42,15 @@ import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component'
     PaginaErroComponent,
     FormDebugComponent,
     ModalSalaComponent
-
   ],
   imports: [
+    routing,
+    HttpModule,
     FormsModule,
     BrowserModule,
     HttpClientModule,
-    HttpModule,
     AngularMultiSelectModule,
-    BootstrapModalModule.forRoot({container: document.body}),
-    routing
+    BootstrapModalModule.forRoot({container: document.body})
   ],
   entryComponents: [ModalUserComponent],
   providers: [DatabaseService],

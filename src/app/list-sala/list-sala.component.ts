@@ -9,12 +9,23 @@ import { DatabaseService } from '../servicos/database.service';
 })
 
 export class ListSalaComponent implements OnInit {
-  salas: any = [];
+  id = -1;
+  salas = [];
 
   constructor(private dbService: DatabaseService) {}
 
   ngOnInit() {
     this.getSalas();
+  }
+
+  onclick(nome) {
+    for (let i = 0; i < this.salas[0].length; i++) {
+      if (this.salas[0][i].nome === nome) {
+        this.id = i;
+        return;
+      }
+    }
+    return -1;
   }
 
   getSalas() {

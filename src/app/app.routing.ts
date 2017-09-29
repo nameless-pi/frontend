@@ -17,8 +17,6 @@ const APP_ROUTERS: Routes = [
   { path: 'cadastro-usuario', component: FormCadastroComponent },
   { path: '' , component: LoginComponent},
   { path: '**' , component: PaginaErroComponent}
-  
-
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTERS);
