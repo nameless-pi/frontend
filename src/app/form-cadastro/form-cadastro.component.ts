@@ -43,6 +43,7 @@ export class FormCadastroComponent implements OnInit {
   onSubmit(form) {
     if (form.valid) {
       const user = form.value;
+      console.log(user);
 
       for (let i = 0; i < this.selectedItems.length; i++) {
         this.salas.push(this.selectedItems[i].itemName);
@@ -55,6 +56,8 @@ export class FormCadastroComponent implements OnInit {
         'rfid': user.rfid,
         'salas': this.salas
       };
+
+      console.log(this.forme);
 
       this.salas = [];
       this.dbService.cadastrarUsuario(this.forme)
