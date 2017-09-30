@@ -5,8 +5,8 @@
   <div class="layer_sala col-md-3">
     <h3>Salas</h3>
     <ul class="list_nome_sala">
-      <li class="li_sala" *ngFor="let sala of salas[0]" >
-          <a (click)="onclick(sala.nome)">{{ sala.nome }}</a>
+      <li class="li_sala" *ngFor="let sala of salas; let idx = index" >
+          <a (click)="onclick(idx)">{{ sala.nome }}</a>
       </li>
     </ul>
   </div>
@@ -21,7 +21,7 @@
         <th>Outros</th>
       </tr>
       
-      <tr class="dados_sala" *ngFor="let horario of (id != -1 ? salas[0][id].horarios : [])">
+      <tr class="dados_sala" *ngFor="let horario of (id != -1 ? salas[id].horarios : [])">
         <td>{{ horario.dia }}</td>
         <td>{{ horario.hora_inicio }}</td>
         <td>{{ horario.hora_fim }}</td>
@@ -34,8 +34,8 @@
       
     </table>
     <div class="button_salas row">
-      <button type="submit" class="btn btn-primary" >Editar Sala</button>
-      <button type="submit" class="btn btn-danger" (click)="deletarSala(idx)">Deletar Sala</button>
+      <button type="submit" class="btn btn-primary" (click)='editarSala(id)'[disabled]= 'id == -1'>Editar Sala</button>
+      <button type="submit" class="btn btn-danger" (click)="deletarSala(id)" [disabled]= 'id == -1'>Deletar Sala</button>
     </div>
   </div>
 </div>

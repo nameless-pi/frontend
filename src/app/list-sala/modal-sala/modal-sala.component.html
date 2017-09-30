@@ -8,14 +8,14 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Nome sala</label>
-          <input name="text" class="form-control" type="text"
-            readonly [ngModel]="sala.nome">
+          <input name="nome_sala" class="form-control" type="text"
+            [ngModel]="sala.nome" required pattern="([B-Z])\d\w{2,2}">
         </div>
 
       </div>
       
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="!formModalSala.valid">Editar</button>
+        <button type="submit" class="btn btn-primary"[disabled]="!formModalSala.valid">Editar</button>
         <button class="btn btn-default" (click)="close()" >Cancelar</button>
       </div>
     </form>
