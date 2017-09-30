@@ -1,22 +1,19 @@
   <div id="menu">  
     <ul ng-app="home-menu">
-        <li><a routerLink="/home">Home</a></li>
-        <li ng-controller="mostraAba">
-          <a (click)="onClick(aba)">Cadastro</a> 
+      <li><a routerLink="/home">Home</a></li>
+      <li dropdown>
+          <a dropdownToggle>Cadastro <span class="caret"></span></a>
+          <ul *dropdownMenu class="dropdown-menu" style="top: auto; margin-left: 68px;">
+            <a class="dropdown-item" routerLink="/cadastro-sala">Salas</a>
+            <a class="dropdown-item" routerLink="/cadastro-usuario">Usuários</a>
+          </ul>
         </li>
-        <li><a routerLink="/list-sala">Salas</a></li>
-        <li><a routerLink="/list-user">Usuários</a></li>
-        <!--colocar o link para o login quando clicar aqui-->
-        <li><a routerLink="/" class="sair">Sair</a></li>
-      </ul>            
-      
-    <div id="aba" ng-click="aba" ng-hide="escondeAba" #aba style="display: none;">
-      <ul id="cad-menu">
-        <li><a class="cad-user" routerLink="/cadastro-usuario">Usuário</a></li>
-        <li><a class="cad-sala" routerLink="/cadastro-sala">Sala</a></li>
+        <li><a routerLink="/list-user">Usuário</a></li>
+        <li><a routerLink="/list-sala">Sala</a></li>
       </ul>
-      
-    </div>
-      
-    
+      <div class="navbar-nav navbar-right" style="margin-top: -48px; margin-right: 0px;">
+        <ul>
+          <li ><a routerLink="/">Sair</a></li>
+        </ul>
+      </div>
   </div>

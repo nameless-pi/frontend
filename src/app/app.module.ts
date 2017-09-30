@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
 
@@ -50,6 +51,7 @@ import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component'
     BrowserModule,
     HttpClientModule,
     AngularMultiSelectModule,
+    BsDropdownModule.forRoot(),
     BootstrapModalModule.forRoot({container: document.body})
   ],
   entryComponents: [ModalUserComponent],
