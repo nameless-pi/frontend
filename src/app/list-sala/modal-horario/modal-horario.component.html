@@ -1,0 +1,42 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()" >&times;</button>
+      <h4 class="modal-title">Editar Horario</h4>
+    </div>
+    <form #formModalHora="ngForm" (ngSubmit)="onSubmit(formModalHora)">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Dia</label>
+          <input name="dia" class="form-control" type="date"
+            readonly [ngModel]="horario.dia">
+        </div>
+
+        <div class="form-group">
+          <label>Horario Inicio</label>
+          <input name="horarioInicio" class="form-control" 
+            type="text" required [ngModel]="horario.horarioInicio">
+        </div>
+
+        <div class="form-group">            
+          <label>Horario Fim</label>
+          <input name="horarioFim" class="form-control" 
+            type="text" required [ngModel]="horario.horarioFim">
+        </div>
+
+        <div class="form-group">            
+          <label>Tipo</label>
+          <select name="tipo" class="form-control" ngModel style="width: 150px">
+            <option *ngFor="let type of typeUsers" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!formModalHora.valid">Editar</button>
+        <button class="btn btn-danger" (click)="close()" >Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

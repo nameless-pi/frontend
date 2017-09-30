@@ -1,3 +1,23 @@
-<p>
-  modal-sala works!
-</p>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()" >&times;</button>
+      <h4 class="modal-title">Editar Sala</h4>
+    </div>
+    <form #formModalSala="ngForm" (ngSubmit)="onSubmit(formModalSala)">
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nome sala</label>
+          <input name="text" class="form-control" type="text"
+            readonly [ngModel]="sala.nome">
+        </div>
+
+      </div>
+      
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!formModalSala.valid">Editar</button>
+        <button class="btn btn-default" (click)="close()" >Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

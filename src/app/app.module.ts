@@ -26,6 +26,7 @@ import { DatabaseService } from './servicos/database.service';
 import { AcessosPipe } from './pipes/acessos.pipe';
 import { HorariosPipe } from './pipes/horarios.pipe';
 import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component';
+import { ModalHorarioComponent } from './list-sala/modal-horario/modal-horario.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component'
     ModalUserComponent,
     PaginaErroComponent,
     FormDebugComponent,
-    ModalSalaComponent
+    ModalSalaComponent,
+    ModalHorarioComponent
   ],
   imports: [
     routing,
