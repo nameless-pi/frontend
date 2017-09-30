@@ -1,3 +1,4 @@
+import { identifierModuleUrl } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,6 +24,10 @@ export class DatabaseService {
       .put(`${APP_SERVER}/users/${id}`, user);
   }
 
+  editarSala(id, nome) {
+    return this.http
+      .put(`${APP_SERVER}/salas/${id}`, nome);
+  }
   deleteUsuario(id) {
     return this.http
       .delete(`${APP_SERVER}/users/${id}`);
@@ -43,8 +48,8 @@ export class DatabaseService {
       .post(`${APP_SERVER}/salas`, nome);
   }
 
-  deletarSala(nome) {
+  deletarSala(id) {
     return this.http
-      .delete(`${APP_SERVER}/salas/${nome}`);
+      .delete(`${APP_SERVER}/salas/${id}`);
   }
 }
