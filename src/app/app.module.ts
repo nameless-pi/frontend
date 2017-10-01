@@ -27,6 +27,7 @@ import { AcessosPipe } from './pipes/acessos.pipe';
 import { HorariosPipe } from './pipes/horarios.pipe';
 import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component';
 import { ModalHorarioComponent } from './list-sala/modal-horario/modal-horario.component';
+import { LoginService } from './servicos/login.service';
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import { ModalHorarioComponent } from './list-sala/modal-horario/modal-horario.c
     BootstrapModalModule.forRoot({container: document.body})
   ],
   entryComponents: [ModalHorarioComponent, ModalSalaComponent, ModalUserComponent],
-  providers: [DatabaseService],
+  providers: [DatabaseService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

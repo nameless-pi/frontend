@@ -20,12 +20,12 @@ nao sei se a lista precisa conter todos os dados-->
 
     </tr>
     <!--Arrumar isso dentro de um for e puxar os dados do JSON -->
-    <tr *ngFor="let user of users[0]; let idx = index">
+    <tr *ngFor="let user of users; let idx = index">
       <td>{{ user.tipo }}</td>
       <td>{{ user.nome }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.rfid }}</td>
-      <td>{{ user.acessos | acessos }}</td>
+      <td>{{ user.direito_acesso | acessos }}</td>
       <td>
         <button type="submit" class="btn btn-primary" (click)="showConfirm(idx)">Editar</button>
         <button type="submit" class="btn btn-danger" (click)="apagarUsuario(idx)">Deletar</button>

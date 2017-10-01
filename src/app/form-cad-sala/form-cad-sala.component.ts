@@ -19,8 +19,9 @@ export class FormCadSalaComponent implements OnInit {
     if (form.valid) {
       const sala = form.value.nome;
 
-      this.dbService.cadastrarSala( {'nome': sala} ).catch( this.handleError )
-      .subscribe();
+      this.dbService.cadastrarSala({ 'nome': sala })
+        .catch( this.handleError )
+        .subscribe();
     }
     form.reset();
   }

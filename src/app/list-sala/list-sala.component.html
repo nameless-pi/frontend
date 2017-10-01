@@ -1,4 +1,3 @@
-
 <app-home></app-home>
 
 <div class="container row">
@@ -27,15 +26,15 @@
         <td>{{ horario.hora_fim }}</td>
         <td>{{ horario.tipo_user }}</td>
         <td>
-          <button type="submit" class="btn btn-primary" (click)='editarHorario(idx)' >Editar Horario</button>
-          <button type="submit" class="btn btn-danger"(click)='deletarHorario(idx)'>Excluir Horario</button>
+          <button class="btn btn-primary" (click)='editarHorario(idx)' >Editar Horario</button>
+          <button class="btn btn-danger"(click)='deletarHorario(idx, horario.id)'>Excluir Horario</button>
         </td>
       </tr>
       
     </table>
     <div class="button_salas row">
-      <button type="submit" class="btn btn-primary" (click)='editarSala(id)'[disabled]= 'id == -1'>Editar Sala</button>
-      <button type="submit" class="btn btn-danger" (click)="deletarSala(id)" [disabled]= 'id == -1'>Deletar Sala</button>
+      <button class="btn btn-primary" (click)="editarSala(id)" [disabled]= 'id == -1'>Editar Sala</button>
+      <button class="btn btn-danger" (click)="deletarSala(id)" [disabled]= 'id == -1'>Deletar Sala</button>
     </div>
   </div>
 </div>

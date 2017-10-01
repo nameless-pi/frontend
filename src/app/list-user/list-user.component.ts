@@ -16,21 +16,21 @@ export class ListUserComponent implements OnInit {
 
   ngOnInit() {
     this.dbService.getUsuarios()
-      .subscribe((data) => {
-        this.users.push(data);
-      });
+      .map(res => res.json())
+      .subscribe((data) => this.users = data);
   }
 
   apagarUsuario(id) {
-    this.dbService.deleteUsuario(this.users[0][id].id)
+    this.dbService
+      .deleteUsuario(this.users[id].id)
       .subscribe();
-    this.users[0].splice(id);
+    this.users.splice(id, 1);
   }
 
   showConfirm(index) {
     const disposable = this.dialogService.addDialog(ModalUserComponent, {
         title: 'Usuário - Editar',
-        user: this.users[0][index],
+        user: this.users[index],
       })
         .subscribe((isConfirmed) => {});
     // setTimeout(() => {

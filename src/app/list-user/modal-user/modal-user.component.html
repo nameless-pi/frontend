@@ -20,7 +20,7 @@
 
         <div class="form-group">            
           <label>Tipo</label>
-          <select name="tipo" class="form-control" ngModel style="width: 150px">
+          <select name="tipo" class="form-control" [ngModel]="user.tipo" style="width: 150px">
             <option *ngFor="let type of typeUsers" [value]="type">{{ type }}</option>
           </select>
         </div>
@@ -47,7 +47,7 @@
       
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" [disabled]="!formModal.valid">Editar</button>
-        <button class="btn btn-default" (click)="close()" >Cancelar</button>
+        <button class="btn btn-default" (click)="btn=true; close()" >Cancelar</button>
       </div>
     </form>
   </div>

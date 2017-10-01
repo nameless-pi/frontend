@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 
 import { DatabaseService } from '../../servicos/database.service';
@@ -12,16 +12,18 @@ export interface ConfirmModel {
 @Component({
   selector: 'app-modal-user',
   templateUrl: './modal-user.component.html',
-  styleUrls: ['./modal-user.component.css']
+  styleUrls: ['./modal-user.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel, OnInit {
   title: string;
   user: any;
+  btn = false;
 
-  dropdownSettings: { singleSelection: boolean; text: string; selectAllText: string; unSelectAllText: string; };
+  dropdownSettings: {text: string; selectAllText: string; unSelectAllText: string; };
   dropdownList = [];
   selectedItems = [];
-  typeUsers = ['Aluno', 'Professor', 'Servente'];
+  typeUsers = ['aluno', 'professor', 'servente'];
 
   constructor(private dbService: DatabaseService, dialogService: DialogService) {
     super(dialogService);
@@ -29,18 +31,26 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
 
   ngOnInit() {
     this.dbService.getSalasSelect()
+    .map(res => res.json())
     .subscribe((data: Array<any>) => {
       for (let i = 0; i < data.length; i++) {
-          this.dropdownList.push({'id': i + 1, 'itemName': data[i].nome});
+          this.dropdownList.push({
+            'id': i + 1,
+            'itemName': data[i].nome,
+            'id_sala': data[i].id
+          });
       }
     });
 
-    for (let i = 0; i < this.user.acessos.length; i++) {
-      this.selectedItems.push({'id': i + 1, 'itemName': this.user.acessos[i].nome_sala});
+    for (let i = 0; i < this.user.direito_acesso.length; i++) {
+      this.selectedItems.push({
+        'id': i + 1,
+        'itemName': this.user.direito_acesso[i].nome_sala,
+        'id_sala': this.user.direito_acesso[i].id_sala
+      });
     }
 
     this.dropdownSettings = {
-      singleSelection: false,
       text: 'Selecione as salas',
       selectAllText: 'Todas',
       unSelectAllText: 'Nenhuma'
@@ -48,13 +58,15 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
   }
 
   onSubmit(form) {
-    if (form.valid) {
+    if (form.valid && !this.btn) {
       const user = form.value;
       let body = {};
-      this.user.acessos = [];
+      this.user.direito_acesso = [];
 
       for (let i = 0; i < this.selectedItems.length; i++) {
-        this.user.acessos.push(this.selectedItems[i].itemName);
+        this.user.direito_acesso.push({
+          'id_sala': this.selectedItems[i].id_sala
+        });
       }
 
       body = {
@@ -62,7 +74,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
         'tipo': user.tipo,
         'email': user.email,
         'rfid': user.rfid,
-        'salas': this.user.acessos
+        'salas': this.user.direito_acesso
       };
 
       this.dbService.editarUsuario(user.id, body)

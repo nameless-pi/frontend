@@ -5,9 +5,7 @@ import { ModalHorarioComponent } from './modal-horario/modal-horario.component';
 import { DialogService } from 'ng2-bootstrap-modal';
 import { Component, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { NgZone } from '@angular/core';
 import { DatabaseService } from '../servicos/database.service';
-
 
 
 @Component({
@@ -21,10 +19,8 @@ export class ListSalaComponent implements OnInit {
   salas: any = [];
   horarios: any = [];
 
-  constructor(private zone: NgZone, private dbService: DatabaseService, private dialogService: DialogService) {
+  constructor( private dbService: DatabaseService, private dialogService: DialogService) {
   }
-
-
 
   ngOnInit() {
     this.getSalas();
@@ -36,6 +32,7 @@ export class ListSalaComponent implements OnInit {
 
   getSalas() {
     this.dbService.getSalas()
+      .map(res => res.json())
       .subscribe(data => this.salas = data);
   }
 
@@ -61,15 +58,13 @@ export class ListSalaComponent implements OnInit {
       horario: this.salas[this.id].horarios[id],
     })
       .subscribe((isConfirmed) => {});
-
-
     }
 
-  deletarHorario(id) {
+  deletarHorario(id, id_horario) {
     console.log(id);
     this.dbService
-    .deletarHorario(id)
-    .subscribe();
+      .deletarHorario(id_horario)
+      .subscribe();
     this.salas[this.id].horarios.splice(id, 1);
   }
 }

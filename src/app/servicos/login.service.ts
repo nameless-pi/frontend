@@ -5,13 +5,12 @@ import { AuthHttp, AuthConfig, JwtHelper } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
 
 const APP_SERVER = 'http://localhost:5000';
-const USERNAME = 'admin';
-const PASSWORD = 'admin';
 
 @Injectable()
 export class LoginService {
+  authHttp: AuthHttp;
 
-  constructor(private http: Http, private authHttp) {
+  constructor(private http: Http) {
     this.authHttp = this.authHttpServiceFactory(this.http);
   }
 
@@ -27,25 +26,16 @@ export class LoginService {
     }), http);
   }
 
-  login() {
-    const body = {
-      'username': USERNAME,
-      'password': PASSWORD
-    };
-
+  login(username, password) {
     this.http
-      .post(`${APP_SERVER}/auth`, body)
+      .post(`${APP_SERVER}/auth`, {
+        'username': username,
+        'password': password
+      })
       .map((response: Response) => response.json())
       .subscribe((data) => {
-
         const token = data.access_token;
         localStorage.setItem('token', token);
       });
-  }
-
-  get() {
-    this.authHttp
-      .get(`${APP_SERVER}/api/v1/users`)
-      .subscribe();
   }
 }

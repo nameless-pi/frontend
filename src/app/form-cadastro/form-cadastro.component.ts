@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { FormsModule } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { DatabaseService } from '../servicos/database.service';
 
@@ -8,10 +8,11 @@ import { DatabaseService } from '../servicos/database.service';
 @Component({
   selector: 'app-form-cadastro',
   templateUrl: './form-cadastro.component.html',
-  styleUrls: ['./form-cadastro.component.css']
+  styleUrls: ['./form-cadastro.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FormCadastroComponent implements OnInit {
-  dropdownSettings: { singleSelection: boolean; text: string; selectAllText: string; unSelectAllText: string; };
+  dropdownSettings: { text: string; selectAllText: string; unSelectAllText: string; };
   dropdownList = [];
   selectedItems = [];
   salas = [];
@@ -22,22 +23,23 @@ export class FormCadastroComponent implements OnInit {
   ngOnInit() {
     this.fillSelect();
     this.dropdownSettings = {
-      singleSelection: false,
       text: 'Selecione as salas',
       selectAllText: 'Todas',
       unSelectAllText: 'Nenhuma',
     };
   }
 
-  onItemSelect(item: any) {
-    this.selectedItems.push(item);
-  }
-
   fillSelect() {
-    this.dbService.getSalasSelect().catch(this.handleError)
+    this.dbService.getSalasSelect()
+    .map(res => res.json())
+    .catch(this.handleError)
     .subscribe((data: Array<any>) => {
       for (let i = 0; i < data.length; i++) {
-          this.dropdownList.push({'id': i + 1, 'itemName': data[i].nome});
+        this.dropdownList.push({
+          'id': i + 1,
+          'itemName': data[i].nome,
+          'id_sala': data[i].id
+        });
       }
     });
   }
@@ -45,10 +47,12 @@ export class FormCadastroComponent implements OnInit {
   onSubmit(form) {
     if (form.valid) {
       const user = form.value;
-      console.log(user);
+      console.log(user, this.salas);
 
       for (let i = 0; i < this.selectedItems.length; i++) {
-        this.salas.push(this.selectedItems[i].itemName);
+        this.salas.push({
+          'id': this.selectedItems[i].id_sala
+        });
       }
 
       this.forme = {
@@ -56,7 +60,7 @@ export class FormCadastroComponent implements OnInit {
         'tipo': user.tipo,
         'email': user.email,
         'rfid': user.rfid,
-        'salas': this.salas
+        'direito_acesso': this.salas
       };
 
       console.log(this.forme);
@@ -68,6 +72,7 @@ export class FormCadastroComponent implements OnInit {
         .subscribe();
     }
     form.reset();
+    this.selectedItems = [];
   }
 
   public handleError(error: any) {
