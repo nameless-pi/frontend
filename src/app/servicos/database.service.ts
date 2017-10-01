@@ -52,4 +52,14 @@ export class DatabaseService {
     return this.http
       .delete(`${APP_SERVER}/salas/${id}`);
   }
+
+  deletarHorario(idHorario) {
+    return this.http
+      .delete(`${APP_SERVER}/horarios/${idHorario}`);
+  }
+
+  editarHorario(id, horario) {
+    return this.http
+    .put( `${APP_SERVER}/horarios/${id}`, horario );
+  }
 }

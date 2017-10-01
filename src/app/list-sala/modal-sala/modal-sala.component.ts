@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { DatabaseService } from './../../servicos/database.service';
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
@@ -17,6 +18,7 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
   implements ConfirmModel, OnInit {
   title: string;
   sala: any;
+  btn = true;
 
   constructor(dialogService: DialogService, private dbService: DatabaseService) {
     super(dialogService);
@@ -26,7 +28,8 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
   }
 
   onSubmit(formModalSala) {
-    if (formModalSala.touched && formModalSala.valid) {
+    if (formModalSala.touched && formModalSala.valid && formModalSala.dirty && this.btn === true ) {
+
       this.sala.nome = formModalSala.value.nome_sala;
       this.alterarSala(this.sala);
     }
@@ -46,7 +49,7 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
     const  errMsg = error.status;
     if ( errMsg === 403 ) {
 
-      alert( 'Este usuário ja existe!' );
+      alert( 'Esta sala ja existe!' );
 
     }else if ( errMsg === 400) {
 

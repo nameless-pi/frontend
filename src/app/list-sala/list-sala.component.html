@@ -21,14 +21,14 @@
         <th>Outros</th>
       </tr>
       
-      <tr class="dados_sala" *ngFor="let horario of (id != -1 ? salas[id].horarios : [])">
+      <tr class="dados_sala" *ngFor="let horario of (id != -1 ? salas[id].horarios : []);let idx = index">
         <td>{{ horario.dia }}</td>
         <td>{{ horario.hora_inicio }}</td>
         <td>{{ horario.hora_fim }}</td>
         <td>{{ horario.tipo_user }}</td>
         <td>
-          <button type="submit" class="btn btn-primary">Editar Horario</button>
-          <button type="submit" class="btn btn-danger">Excluir Horario</button>
+          <button type="submit" class="btn btn-primary" (click)='editarHorario(idx)' >Editar Horario</button>
+          <button type="submit" class="btn btn-danger"(click)='deletarHorario(idx)'>Excluir Horario</button>
         </td>
       </tr>
       

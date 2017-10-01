@@ -56,7 +56,7 @@ import { ModalHorarioComponent } from './list-sala/modal-horario/modal-horario.c
     BsDropdownModule.forRoot(),
     BootstrapModalModule.forRoot({container: document.body})
   ],
-  entryComponents: [ModalUserComponent],
+  entryComponents: [ModalHorarioComponent, ModalSalaComponent, ModalUserComponent],
   providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
