@@ -28,6 +28,8 @@ import { HorariosPipe } from './pipes/horarios.pipe';
 import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component';
 import { ModalHorarioComponent } from './list-sala/modal-horario/modal-horario.component';
 import { LoginService } from './servicos/login.service';
+import { AuthGuardService } from './servicos/auth-guard.service';
+import { JwtHelper } from 'angular2-jwt';
 
 
 @NgModule({
@@ -58,7 +60,7 @@ import { LoginService } from './servicos/login.service';
     BootstrapModalModule.forRoot({container: document.body})
   ],
   entryComponents: [ModalHorarioComponent, ModalSalaComponent, ModalUserComponent],
-  providers: [DatabaseService, LoginService],
+  providers: [DatabaseService, LoginService, AuthGuardService, JwtHelper],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
