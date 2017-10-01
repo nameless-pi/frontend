@@ -1,10 +1,12 @@
+import { Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
 import { HorariosPipe } from './../pipes/horarios.pipe';
-import { DisposableFn } from '@angular/core/src/view';
+
 import { ModalSalaComponent } from './modal-sala/modal-sala.component';
 import { ModalHorarioComponent } from './modal-horario/modal-horario.component';
+
 import { DialogService } from 'ng2-bootstrap-modal';
-import { Component, OnInit } from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core';
 import { DatabaseService } from '../servicos/database.service';
 
 
@@ -15,19 +17,42 @@ import { DatabaseService } from '../servicos/database.service';
 })
 
 export class ListSalaComponent implements OnInit {
+  @ViewChild('button') btn: ElementRef;
   id = -1;
   salas: any = [];
   horarios: any = [];
 
-  constructor( private dbService: DatabaseService, private dialogService: DialogService) {
+  constructor(
+    private dbService: DatabaseService,
+    private dialogService: DialogService,
+    private router: Router
+    ) {
   }
 
   ngOnInit() {
     this.getSalas();
   }
 
+  navigate() {
+    this.router.navigate(['/cadastro-sala']);
+  }
+
   onclick(idx) {
+    const classes = this.btn.nativeElement.children[idx].className.split(' ');
+    if (classes.indexOf('active') === -1) {
+      this.btn.nativeElement.children[idx].className += ' active';
+      for (let i = 0; i < this.btn.nativeElement.children.length; i++) {
+        if (i !== idx) {
+          this.btn.nativeElement.children[i].className = 'btn list-group-item li_sala';
+        }
+      }
+    }
+    if (idx === this.id) {
+      this.btn.nativeElement.children[idx].className = 'btn list-group-item li_sala';
+      this.id = -1;
+    } else {
       this.id = idx;
+    }
   }
 
   getSalas() {
@@ -46,16 +71,29 @@ export class ListSalaComponent implements OnInit {
   editarSala(id) {
     const disposable = this.dialogService.addDialog(ModalSalaComponent, {
       title: 'Sala - Editar',
-      sala: this.salas[id],
+      sala: this.salas[id]
     })
       .subscribe((isConfirmed) => {});
 
+  }
+
+  novoHorario() {
+    const Disposable = this.dialogService.addDialog(ModalHorarioComponent, {
+      title: 'Horário - Cadastro',
+      horario: this.salas[this.id].horarios,
+      buttonText: 'Cadastrar',
+      tipo: 'novo',
+      salaId: this.salas[this.id].id
+    })
+      .subscribe((isConfirmed) => {});
   }
 
   editarHorario(id) {
     const Disposable = this.dialogService.addDialog(ModalHorarioComponent, {
       title: 'Horário - Editar',
       horario: this.salas[this.id].horarios[id],
+      buttonText: 'Editar',
+      tipo: 'editar'
     })
       .subscribe((isConfirmed) => {});
     }

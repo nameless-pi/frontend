@@ -2,40 +2,48 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" (click)="close()" >&times;</button>
-      <h4 class="modal-title">Editar Horario</h4>
+      <h4 class="modal-title">{{ title }}</h4>
     </div>
+
     <form #formModalHora="ngForm" (ngSubmit)="onSubmit(formModalHora)">
       <div class="modal-body">
         <div class="form-group"> 
           <label>Dia da Semana:</label>
             <select name="dia" class="form-control" [ngModel]="horario.dia" style="width: 150px">
-              <option *ngFor="let dia of dias" [value]="dia">{{ dia }}</option>
+              <option style="text-transform: capitalize" *ngFor="let dia of dias" [value]="dia">{{ dia }}</option>
             </select>
         </div>
 
         <div class="form-group">
-          <label>Horario Inicio</label>
+          <label>Horário Inicio</label>
           <input name="horarioInicio" class="form-control" 
-            type="text" required [ngModel]="horario.hora_inicio">
+            type="text" required pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"
+            placeholder="11:00:00"
+            [ngModel]="horario.hora_inicio"/>
         </div>
 
         <div class="form-group">            
-          <label>Horario Fim</label>
+          <label>Horário Fim</label>
           <input name="horarioFim" class="form-control" 
-            type="text" required [ngModel]="horario.hora_fim">
+            type="text" placeholder="23:00:00"
+            [ngModel]="horario.hora_fim" required
+            pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/>
         </div>
 
         <div class="form-group"> 
           <label>Tipo Usuário:</label>
-            <select name="tipo" class="form-control" [ngModel] = "horario.tipo_user" style="width: 150px">
-              <option *ngFor="let type of typeUsers"  [value]="type">{{ type }}</option>
+            <select name="tipo" class="form-control" 
+              [ngModel]="horario.tipo_user" style="width: 150px" required>
+              <option style="text-transform: capitalize" 
+                *ngFor="let type of typeUsers" [value]="type">
+                {{ type }}
+              </option>
             </select>
         </div>
-
       </div>
       
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Editar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!formModalHora.valid">{{ buttonText }}</button>
         <button class="btn btn-danger" (click)="close(); btn = false" >Cancelar</button>
       </div>
     </form>

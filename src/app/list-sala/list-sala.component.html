@@ -2,15 +2,29 @@
 
 <div class="container row">
   <div class="layer_sala col-md-3">
-    <h3>Salas</h3>
-    <ul class="list_nome_sala">
-      <li class="li_sala" *ngFor="let sala of salas; let idx = index" >
-          <a (click)="onclick(idx)">{{ sala.nome }}</a>
-      </li>
+    <h3>Salas 
+      <button style="margin-left: 50%" 
+        class="btn btn-success btn-sm"
+        (click)="navigate()">
+        Nova
+      </button>
+    </h3>
+    <hr>
+    <ul class="list-group" #button>
+      <button class="btn list-group-item li_sala"
+        *ngFor="let sala of salas; let idx = index"
+        (click)="onclick(idx)">
+          {{sala.nome}}
+      </button>
     </ul>
   </div>
   <div class="horario_sala col-md-9">
-    <h3>Horários</h3>
+    <h3>Horários 
+      <button style="margin-left: 80%" class="btn btn-success btn-sm"
+        (click)="novoHorario(id)" [disabled]="id === -1">
+        Novo
+      </button>
+    </h3>
     <table class="table table-hover">
       <tr>
         <th>Dia</th>

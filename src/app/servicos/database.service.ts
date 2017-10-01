@@ -68,6 +68,11 @@ export class DatabaseService {
       .delete(`${APP_SERVER}/salas/${id}`);
   }
 
+  cadastrarHorario(horario) {
+    return this.authHttp
+      .post(`${APP_SERVER}/horarios`, horario);
+  }
+
   deletarHorario(idHorario) {
     return this.authHttp
       .delete(`${APP_SERVER}/horarios/${idHorario}`);
