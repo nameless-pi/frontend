@@ -13,4 +13,7 @@ export class HomeComponent implements OnInit {
   onClick(aba) {
     aba.css('display: block');
   }
+  clearToken() {
+    localStorage.removeItem('token');
+  }
 }
