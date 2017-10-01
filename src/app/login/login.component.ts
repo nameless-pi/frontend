@@ -10,20 +10,18 @@ import { LoginService } from '../servicos/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  model: any = {};
-  loading = false;
-  error = '';
+  bool = false;
 
   constructor(private router: Router, private loginService: LoginService) {}
   ngOnInit() {}
 
-  onSubmit(fLogin) {
+  async onSubmit(fLogin) {
     if (fLogin.valid) {
-      if (this.loginService.login(fLogin.value.login, fLogin.value.password)) {
+      this.bool = await this.loginService.login(fLogin.value.login, fLogin.value.password);
+      if (this.bool) {
         this.router.navigate(['/home']);
-      } else {
-        fLogin.reset();
       }
+      fLogin.reset();
     }
   }
 }

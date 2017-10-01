@@ -1,4 +1,8 @@
 <div class="container text-center">
+    <div *ngIf="bool" class="alert alert-danger">
+       <p><strong>Login inválido!</strong></p>
+       <p>Verifique sua senha/login e tente novamente.</p>
+      </div>
     <form class="form-horizontal" #fLogin="ngForm" (ngSubmit)="onSubmit(fLogin)">
         <div class="text-center">
             <h3>Controle de Portas</h3>

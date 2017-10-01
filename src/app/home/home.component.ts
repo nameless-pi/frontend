@@ -10,9 +10,6 @@ export class HomeComponent implements OnInit {
   constructor() {}
   ngOnInit() {}
 
-  onClick(aba) {
-    aba.css('display: block');
-  }
   clearToken() {
     localStorage.removeItem('token');
   }
