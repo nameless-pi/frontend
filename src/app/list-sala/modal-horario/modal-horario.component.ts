@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from './../../servicos/database.service';
-
+import {Observable} from 'rxjs/Observable';
 
 export interface ConfirmModel {
   title: string;
@@ -52,7 +52,34 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
   editarHorario(id, body) {
       this.dbService
         .editarHorario(id, body)
+        .catch(this.handleError)
         .subscribe();
         this.close();
+  }
+
+
+
+  public handleError(error: any) {
+    const  errMsg = error.status;
+    if ( errMsg === 403 ) {
+
+      alert( 'Esta sala ja existe!' );
+
+    }else if ( errMsg === 400) {
+
+      alert( 'ops, há algo errado nesta página ou configurações do servidor' );
+
+    }else if ( errMsg === 401) {
+
+      alert( 'Login ou senha invalido' );
+
+    }else if ( errMsg === 404) {
+
+      alert( 'Dado não encontrado!' );
+
+    }else if ( errMsg === 0) {
+      alert('Erro de conexão, tente novamente!');
+    }
+  return Observable.throw(errMsg);
   }
 }
