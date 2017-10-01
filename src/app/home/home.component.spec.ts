@@ -11,7 +11,6 @@ describe('HomeComponent', () => {
       declarations: [ HomeComponent ]
     })
     .compileComponents();
-    
   }));
 
   beforeEach(() => {
@@ -23,6 +22,4 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  
 });
