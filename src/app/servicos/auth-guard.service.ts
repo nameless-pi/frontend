@@ -11,7 +11,7 @@ export class AuthGuardService implements CanActivate {
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
     }
-
+    alert('Sua sessão expirou, logue novamente!');
     localStorage.removeItem('token');
     this.router.navigate(['']);
     return false;
