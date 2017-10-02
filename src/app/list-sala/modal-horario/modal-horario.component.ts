@@ -54,6 +54,7 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
         this.editarHorario(this.horario.id, this.body);
       } else if (this.tipo === 'novo') {
         this.cadastrarHorario(this.body);
+        this.horario.push(this.body);
       }
     }
   }
