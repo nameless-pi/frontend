@@ -8,6 +8,8 @@ import {Observable} from 'rxjs/Observable';
 export interface ConfirmModel {
   title: string;
   user: any;
+  mode: string;
+  users: any[];
 }
 
 @Component({
@@ -22,31 +24,34 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
   btn = false;
   salas = [];
   body = {};
+  users: any[];
+  mode: string;
   dropdownSettings: {text: string; selectAllText: string; unSelectAllText: string; };
   dropdownList = [];
   selectedItems = [];
-  typeUsers = ['aluno', 'professor', 'servente'];
+  typeUsers = ['Aluno', 'Professor', 'Servente'];
 
   constructor(private dbService: DatabaseService, dialogService: DialogService) {
     super(dialogService);
   }
 
   ngOnInit() {
+    console.log(this.user);
     this.fillSelect();
     this.dropdownSettings = {
       text: 'Selecione as salas',
       selectAllText: 'Todas',
       unSelectAllText: 'Nenhuma'
     };
-    this.setBeforeSelectedSalas();
+    if (this.user.direito_acesso) {
+      this.setBeforeSelectedSalas();
+    }
   }
-
-
 
   fillSelect() {
     this.dbService.getSalasSelect()
     .map(res => res.json())
-    .catch(this.handleError)
+    // .catch(this.handleError)
     .subscribe((data: Array<any>) => {
       for (let i = 0; i < data.length; i++) {
         this.dropdownList.push({
@@ -83,43 +88,46 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
         'rfid': user.rfid,
         'direito_acesso': this.salas
       };
+
       this.selectedItems = [];
       this.salas  = [];
-      this.dbService.editarUsuario(user.id, this.body)
+
+      if (this.mode === 'Editar') {
+        this.dbService.editarRecurso('usuarios', user.id, this.body)
         .catch( this.handleError )
-        .subscribe();
+        .subscribe(res => {
+          this.user = res.json();
+        });
+      } else {
+        this.dbService.criarRecurso('usuarios', this.body)
+          .subscribe(res => {
+            if (res.status === 201) {
+              this.users.push(this.body);
+            }
+          });
+      }
     }
     this.close();
   }
 
   public handleError(error: any) {
-    const  errMsg = error.status;
-    if ( errMsg === 403 ) {
+    const errMsg = error.status;
+    if (errMsg === 403) {
+      alert('Este usuário já existe!');
 
-      alert( 'Esta sala ja existe!' );
+    } else if (errMsg === 400) {
+      alert('Ops, há algo errado nesta página ou configurações do servidor');
 
-    }else if ( errMsg === 400) {
+    } else if (errMsg === 401) {
+      alert('Credenciais inválidas');
 
-      alert( 'ops, há algo errado nesta página ou configurações do servidor' );
+    } else if (errMsg === 404) {
+      alert('Dado não encontrado!');
 
-    }else if ( errMsg === 401) {
-
-      alert( 'Login ou senha invalido' );
-
-    }else if ( errMsg === 404) {
-
-      alert( 'Dado não encontrado!' );
-
-    }else if ( errMsg === 0) {
+    } else if (errMsg === 0) {
       alert('Erro de conexão, tente novamente!');
     }
-  return Observable.throw(errMsg);
-  }
 
-  // confirm() {
-  //   // we set dialog result as true on click on confirm button,
-  //   // then we can get dialog result from caller code
-  //   this.result = true;
-  //   this.close();
-  // }
+    return Observable.throw(errMsg);
+  }
 }

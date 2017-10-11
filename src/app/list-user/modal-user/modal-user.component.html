@@ -6,7 +6,7 @@
     </div>
     <form #formModal="ngForm" (ngSubmit)="onSubmit(formModal)">
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group" *ngIf="mode === 'Editar'">
           <label>ID</label>
           <input name="id" class="form-control" type="text"
             readonly [ngModel]="user.id">
@@ -20,7 +20,8 @@
 
         <div class="form-group">            
           <label>Tipo</label>
-          <select name="tipo" class="form-control" [ngModel]="user.tipo" style="width: 150px">
+          <select name="tipo" class="form-control" [ngModel]="user.tipo" style="width: 150px"
+            required>
             <option *ngFor="let type of typeUsers" [value]="type">{{ type }}</option>
           </select>
         </div>
@@ -46,7 +47,8 @@
       </div>
       
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="!formModal.valid">Editar</button>
+        <button type="submit" class="btn btn-primary"
+          [disabled]="!formModal.valid">{{ mode }}</button>
         <button class="btn btn-default" (click)="btn=true; close()" >Cancelar</button>
       </div>
     </form>

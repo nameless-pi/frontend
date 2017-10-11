@@ -8,6 +8,8 @@ export class AcessosPipe implements PipeTransform {
   transform(value: any, args?: any): any {
     if (!value.length) {
       return 'Nenhuma';
+    } else if (value.length > 5) {
+      return value.length + ' salas';
     }
 
     let acessos = '[';

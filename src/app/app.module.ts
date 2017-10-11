@@ -9,18 +9,17 @@ import { HttpModule } from '@angular/http';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 import { routing } from './app.routing';
+
 
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ListUserComponent} from './list-user/list-user.component';
 import { ListSalaComponent} from './list-sala/list-sala.component';
 import { PaginaErroComponent } from './pagina-erro/pagina-erro.component';
-import { FormCadSalaComponent } from './form-cad-sala/form-cad-sala.component';
-import { FormCadastroComponent } from './form-cadastro/form-cadastro.component';
 import { ModalUserComponent } from './list-user/modal-user/modal-user.component';
-import { FormDebugComponent } from './form-debug/form-debug.component';
 import { ModalSalaComponent } from './list-sala/modal-sala/modal-sala.component';
 import { ModalHorarioComponent } from './list-sala/modal-horario/modal-horario.component';
 
@@ -39,16 +38,13 @@ import { LoginDisabledService } from './servicos/login-disabled.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    FormCadastroComponent,
     HomeComponent,
     ListSalaComponent,
     ListUserComponent,
-    FormCadSalaComponent,
     AcessosPipe,
     HorariosPipe,
     ModalUserComponent,
     PaginaErroComponent,
-    FormDebugComponent,
     ModalSalaComponent,
     ModalHorarioComponent
   ],
@@ -59,6 +55,7 @@ import { LoginDisabledService } from './servicos/login-disabled.service';
     BrowserModule,
     HttpClientModule,
     AngularMultiSelectModule,
+    TimepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     BootstrapModalModule.forRoot({container: document.body})
   ],

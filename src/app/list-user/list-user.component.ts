@@ -15,26 +15,38 @@ export class ListUserComponent implements OnInit {
   constructor(private dbService: DatabaseService, private dialogService: DialogService) { }
 
   ngOnInit() {
-    this.dbService.getUsuarios()
+    this.dbService.getRecurso('usuarios')
       .map(res => res.json())
       .subscribe((data) => this.users = data);
   }
 
   apagarUsuario(id) {
-    this.dbService
-      .deleteUsuario(this.users[id].id)
-      .subscribe();
-    this.users.splice(id, 1);
+    if (confirm('Você realmente deseja apagar este usuário?')) {
+      this.dbService
+        .deletarRecurso('usuarios', this.users[id].id)
+        .subscribe();
+      this.users.splice(id, 1);
+    }
   }
 
-  showConfirm(index) {
+  showModal(index, mode = 'Editar') {
     const disposable = this.dialogService.addDialog(ModalUserComponent, {
-        title: 'Usuário - Editar',
-        user: this.users[index],
+        title: 'Usuário - ' + mode,
+        user: index >= 0 ? this.users[index] : {},
+        mode: mode,
+        users: this.users
       })
         .subscribe((isConfirmed) => {});
-    // setTimeout(() => {
-    //   disposable.unsubscribe();
-    // }, 10000);
+  }
+
+  deletarTodos() {
+    if (confirm('Deseja realmente apagar todos usuários?')) {
+      this.dbService.deletarTodosRecursos('usuarios')
+        .subscribe(res => {
+          if (res.status === 204) {
+            this.users = [];
+          }
+        });
+    }
   }
 }

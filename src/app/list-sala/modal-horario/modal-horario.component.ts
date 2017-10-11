@@ -23,10 +23,13 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
   buttonText: string;
   salaId: number;
 
-  typeUsers = ['aluno', 'professor', 'servente'];
-  dias = ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'];
+  typeUsers = ['Aluno', 'Professor', 'Servente'];
+  dias = ['Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo'];
   btn = true;
   body = {};
+
+  myTime = new Date();
+  ismeridian = false;
 
   constructor( dialogService: DialogService, private dbService: DatabaseService) {
     super(dialogService);
@@ -60,7 +63,7 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
   }
 
   cadastrarHorario(body) {
-    this.dbService.cadastrarHorario(body)
+    this.dbService.criarRecurso('horarios', body)
       .catch(this.handleError)
       .subscribe();
       this.close();
@@ -68,13 +71,11 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
 
   editarHorario(id, body) {
       this.dbService
-        .editarHorario(id, body)
+        .editarRecurso('horarios', id, body)
         .catch(this.handleError)
         .subscribe();
-        this.close();
+      this.close();
   }
-
-
 
   public handleError(error: any) {
     const  errMsg = error.status;
@@ -85,18 +86,18 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
       alert('Ops! Há algo errado nesta página ou no servidor');
 
     } else if (errMsg === 401) {
-      alert('Login ou senha inválida');
+      alert('Credenciais inválidas');
 
     } else if (errMsg === 404) {
       alert('Dado não existente!');
 
-    } else if ( errMsg === 0) {
+    } else if (errMsg === 0) {
       alert('Erro de conexão, tente novamente!');
 
     } else {
       alert('Horário cadastrado com sucesso!');
     }
-
+    // window.location.reload();
     return Observable.throw(errMsg);
   }
 }

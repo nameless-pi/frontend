@@ -24,62 +24,38 @@ export class DatabaseService {
     }), this.http);
   }
 
-  cadastrarUsuario(usuario) {
+  getRecurso(recurso) {
     return this.authHttp
-      .post(`${APP_SERVER}/users`, usuario);
+      .get(`${APP_SERVER}/${recurso}`);
   }
 
-  getUsuarios() {
+  getRecursoId(recurso, id) {
     return this.authHttp
-      .get(`${APP_SERVER}/users`);
+      .get(`${APP_SERVER}/${recurso}/${id}`);
   }
 
-  editarUsuario(id, user) {
+  criarRecurso(recurso, body) {
     return this.authHttp
-      .put(`${APP_SERVER}/users/${id}`, user);
+      .post(`${APP_SERVER}/${recurso}`, body);
   }
 
-  editarSala(id, nome) {
+  editarRecurso(recurso, id, body) {
     return this.authHttp
-      .put(`${APP_SERVER}/salas/${id}`, nome);
+      .put(`${APP_SERVER}/${recurso}/${id}`, body);
   }
-  deleteUsuario(id) {
+
+  deletarRecurso(recurso, id) {
     return this.authHttp
-      .delete(`${APP_SERVER}/users/${id}`);
+      .delete(`${APP_SERVER}/${recurso}/${id}`);
+  }
+
+  deletarTodosRecursos(recurso) {
+    return this.authHttp
+      .delete(`${APP_SERVER}/${recurso}`);
   }
 
   getSalasSelect() {
     return this.authHttp
       .get(`${APP_SERVER}/json/salas`);
-  }
-
-  getSalas() {
-    return this.authHttp
-      .get(`${APP_SERVER}/salas`);
-  }
-
-  cadastrarSala(nome) {
-    return this.authHttp
-      .post(`${APP_SERVER}/salas`, nome);
-  }
-
-  deletarSala(id) {
-    return this.authHttp
-      .delete(`${APP_SERVER}/salas/${id}`);
-  }
-
-  cadastrarHorario(horario) {
-    return this.authHttp
-      .post(`${APP_SERVER}/horarios`, horario);
-  }
-
-  deletarHorario(idHorario) {
-    return this.authHttp
-      .delete(`${APP_SERVER}/horarios/${idHorario}`);
-  }
-
-  editarHorario(id, horario) {
-    return this.authHttp
-      .put( `${APP_SERVER}/horarios/${id}`, horario );
   }
 }

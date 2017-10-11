@@ -33,10 +33,6 @@ export class ListSalaComponent implements OnInit {
     this.getSalas();
   }
 
-  navigate() {
-    this.router.navigate(['/cadastro-sala']);
-  }
-
   onclick(idx) {
     const classes = this.btn.nativeElement.children[idx].className.split(' ');
     if (classes.indexOf('active') === -1) {
@@ -56,22 +52,26 @@ export class ListSalaComponent implements OnInit {
   }
 
   getSalas() {
-    this.dbService.getSalas()
+    this.dbService.getRecurso('salas')
       .map(res => res.json())
       .subscribe(data => this.salas = data);
   }
 
   deletarSala(index) {
-    this.dbService.deletarSala(this.salas[index].id)
+    if (confirm('Você realmente deseja apagar esta sala?')) {
+      this.dbService.deletarRecurso('salas', this.salas[index].id)
       .subscribe();
-    this.salas.splice(index, 1);
-    this.id = -1;
+      this.salas.splice(index, 1);
+      this.id = -1;
+    }
   }
 
-  editarSala(id) {
+  showModal(id, mode = 'Editar') {
     const disposable = this.dialogService.addDialog(ModalSalaComponent, {
-      title: 'Sala - Editar',
-      sala: this.salas[id]
+      title: 'Sala - ' + mode,
+      sala: id >= 0 ? this.salas[id] : {},
+      salas: this.salas,
+      mode: mode
     })
       .subscribe((isConfirmed) => {});
 
@@ -79,31 +79,52 @@ export class ListSalaComponent implements OnInit {
 
   novoHorario() {
     const Disposable = this.dialogService.addDialog(ModalHorarioComponent, {
-      title: 'Horário - Cadastro',
-      horario: this.salas[this.id].horarios,
-      buttonText: 'Cadastrar',
       tipo: 'novo',
-      salaId: this.salas[this.id].id
+      title: 'Horário - Cadastro',
+      buttonText: 'Cadastrar',
+      salaId: this.salas[this.id].id,
+      horario: this.salas[this.id].horarios
     })
       .subscribe((isConfirmed) => {});
   }
 
   editarHorario(id) {
     const Disposable = this.dialogService.addDialog(ModalHorarioComponent, {
+      tipo: 'editar',
       title: 'Horário - Editar',
-      horario: this.salas[this.id].horarios[id],
       buttonText: 'Editar',
-      tipo: 'editar'
+      salaId: this.salas[this.id].id,
+      horario: this.salas[this.id].horarios[id]
     })
       .subscribe((isConfirmed) => {});
     }
 
   deletarHorario(id, id_horario) {
     console.log(id);
-    this.dbService
-      .deletarHorario(id_horario)
-      .subscribe();
-    this.salas[this.id].horarios.splice(id, 1);
+    if (confirm('Você realmente deseja apagar este horário?')) {
+      this.dbService
+        .deletarRecurso('horarios', id_horario)
+        .subscribe();
+      this.salas[this.id].horarios.splice(id, 1);
+    }
+  }
+
+  deletarTodos(recurso, id = -1) {
+    if (recurso === 'horarios' && confirm('Deseja realmente apagar todos os horários ?')) {
+      this.dbService.deletarRecurso('salas/horarios', id)
+        .subscribe(res => {
+          if (res.status === 204) {
+            this.horarios = [];
+          }
+        });
+    } else if (confirm('Deseja realmente apagar todas as salas?')) {
+      this.dbService.deletarTodosRecursos(recurso)
+        .subscribe(res => {
+          if (res.status === 204) {
+            this.salas = [];
+          }
+        });
+    }
   }
 }
 

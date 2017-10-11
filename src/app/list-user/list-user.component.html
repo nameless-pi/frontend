@@ -1,14 +1,18 @@
-<!--Arrumar -  Puxar a lista das user ??
-Ver com o Gabriel oq  precisa colocar aqui
- - nome do usuario
- - editar usuario
- - remover usuario
-
-nao sei se a lista precisa conter todos os dados-->
 <app-home></app-home>
 
 <div class="container">
-  <h3>Usuarios</h3>
+  <h3>Usuários
+    <div class="btn-group">
+      <button class="btn btn-success btn-sm"
+        (click)="showModal(-1, 'Cadastrar')">
+        Nova
+      </button>
+      <button class="btn btn-danger btn-sm"
+        (click)="deletarTodos()">
+        Deletar todos
+      </button>
+    </div>
+  </h3>
   <table class="table table-hover">
     <tr>
       <th>Tipo</th>
@@ -19,7 +23,6 @@ nao sei se a lista precisa conter todos os dados-->
       <th>Outros</th>
 
     </tr>
-    <!--Arrumar isso dentro de um for e puxar os dados do JSON -->
     <tr *ngFor="let user of users; let idx = index">
       <td>{{ user.tipo }}</td>
       <td>{{ user.nome }}</td>
@@ -27,7 +30,7 @@ nao sei se a lista precisa conter todos os dados-->
       <td>{{ user.rfid }}</td>
       <td>{{ user.direito_acesso | acessos }}</td>
       <td>
-        <button type="submit" class="btn btn-primary" (click)="showConfirm(idx)">Editar</button>
+        <button type="submit" class="btn btn-primary" (click)="showModal(idx)">Editar</button>
         <button type="submit" class="btn btn-danger" (click)="apagarUsuario(idx)">Deletar</button>
       </td>
     </tr>

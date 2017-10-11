@@ -22,6 +22,11 @@
             [ngModel]="horario.hora_inicio"/>
         </div>
 
+        <!-- REMOVER -->
+        <div class="form-group">
+          <timepicker [(ngModel)]="myTime" [showMeridian]="ismeridian"></timepicker>          
+        </div>
+
         <div class="form-group">            
           <label>Horário Fim</label>
           <input name="horarioFim" class="form-control" 
