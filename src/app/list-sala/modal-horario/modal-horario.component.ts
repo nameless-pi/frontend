@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from './../../servicos/database.service';
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +14,8 @@ export interface ConfirmModel {
 @Component({
   selector: 'app-modal-horario',
   templateUrl: './modal-horario.component.html',
-  styleUrls: ['./modal-horario.component.css']
+  styleUrls: ['./modal-horario.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel, OnInit {
   title: string;

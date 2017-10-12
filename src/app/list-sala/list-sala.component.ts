@@ -20,7 +20,6 @@ export class ListSalaComponent implements OnInit {
   @ViewChild('button') btn: ElementRef;
   id = -1;
   salas: any = [];
-  horarios: any = [];
 
   constructor(
     private dbService: DatabaseService,
@@ -111,10 +110,10 @@ export class ListSalaComponent implements OnInit {
 
   deletarTodos(recurso, id = -1) {
     if (recurso === 'horarios' && confirm('Deseja realmente apagar todos os horários ?')) {
-      this.dbService.deletarRecurso('salas/horarios', id)
+      this.dbService.deletarRecurso('salas/horarios', this.salas[id].id)
         .subscribe(res => {
           if (res.status === 204) {
-            this.horarios = [];
+            this.salas[id].horarios = [];
           }
         });
     } else if (confirm('Deseja realmente apagar todas as salas?')) {

@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { DatabaseService } from './../../servicos/database.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import {Observable} from 'rxjs/Observable';
 
@@ -14,7 +14,8 @@ export interface ConfirmModel {
 @Component({
   selector: 'app-modal-sala',
   templateUrl: './modal-sala.component.html',
-  styleUrls: ['./modal-sala.component.css']
+  styleUrls: ['./modal-sala.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
   implements ConfirmModel, OnInit {

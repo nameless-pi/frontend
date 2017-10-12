@@ -17,7 +17,11 @@ export class ListUserComponent implements OnInit {
   ngOnInit() {
     this.dbService.getRecurso('usuarios')
       .map(res => res.json())
-      .subscribe((data) => this.users = data);
+      .subscribe((data) => {
+        this.users = data;
+        console.log(this.users);
+      });
+
   }
 
   apagarUsuario(id) {
