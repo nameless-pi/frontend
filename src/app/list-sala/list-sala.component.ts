@@ -1,14 +1,11 @@
 import { Router } from '@angular/router';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
-import { HorariosPipe } from './../pipes/horarios.pipe';
-
 import { ModalSalaComponent } from './modal-sala/modal-sala.component';
 import { ModalHorarioComponent } from './modal-horario/modal-horario.component';
 
 import { DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from '../servicos/database.service';
-
 
 @Component({
   selector: 'app-list-sala',

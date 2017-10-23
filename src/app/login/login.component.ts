@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
-import { routing } from '../app.routing';
 import { LoginService } from '../servicos/login.service';
 
 @Component({
@@ -11,6 +10,7 @@ import { LoginService } from '../servicos/login.service';
 })
 export class LoginComponent implements OnInit {
   bool = false;
+  @ViewChild('flag') passwdInput: ElementRef;
 
   constructor(private router: Router, private loginService: LoginService) {}
   ngOnInit() {}
@@ -23,6 +23,18 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       }
       fLogin.reset();
+    }
+  }
+
+  handlePassword() {
+    const inputType = this.passwdInput.nativeElement.children[0];
+    const icon = this.passwdInput.nativeElement.children[1].children[0].children[0];
+    if (inputType.type === 'text') {
+      inputType.type = 'password';
+      icon.className = 'glyphicon glyphicon-eye-open';
+    } else {
+      inputType.type = 'text';
+      icon.className = 'glyphicon glyphicon-eye-close';
     }
   }
 }

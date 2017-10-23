@@ -1,7 +1,7 @@
 <app-home></app-home>
 
 <div class="container">
-  <h3>Usuários
+  <h3>Administradores
     <div class="btn-group">
       <button class="btn btn-success btn-sm"
         (click)="showModal(-1, 'Cadastrar')">
@@ -15,27 +15,20 @@
   </h3>
   <table class="table table-hover">
     <tr>
-      <th>Tipo</th>
       <th>Nome</th>
-      <th>Email</th>
-      <th>RFID</th>
-      <th>Salas Permitidas</th>
+      <th>Login</th>
       <th>Outros</th>
-
     </tr>
-    <tr *ngFor="let user of users; let idx = index">
-      <td>{{ user.tipo }}</td>
-      <td>{{ user.nome }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.rfid }}</td>
-      <td>{{ acessosTransform(user.direito_acesso) }}</td>
+    <tr *ngFor="let adm of admins; let idx = index">
+      <td>{{ adm.nome }}</td>
+      <td>{{ adm.login }}</td>
       <td>
         <button type="submit" class="btn btn-primary" (click)="showModal(idx)"
-          tooltip="Editar usuário">
+          tooltip="Editar administrador">
           <span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <button type="submit" class="btn btn-danger" (click)="apagarUsuario(idx)"
-          tooltip="Deletar usuário">
+        <button type="submit" class="btn btn-danger" (click)="apagarAdmin(idx)"
+        tooltip="Deletar administrador">
           <span class="glyphicon glyphicon-trash"></span>
         </button>
       </td>

@@ -10,6 +10,7 @@ export interface ConfirmModel {
   user: any;
   mode: string;
   users: any[];
+  index: any;
 }
 
 @Component({
@@ -26,6 +27,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
   body = {};
   users: any[];
   mode: string;
+  index: any;
   dropdownSettings: {text: string; selectAllText: string; unSelectAllText: string; };
   dropdownList = [];
   selectedItems = [];
@@ -97,6 +99,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
         .catch( this.handleError )
         .subscribe(res => {
           this.user = res.json();
+          this.users[this.index] = this.user;
         });
       } else {
         this.dbService.criarRecurso('usuarios', this.body)

@@ -11,8 +11,17 @@
           <input type="text" name="login" class="form-control input chat-input"
             placeholder="Login" ngModel required/>
           <br>
-          <input type="password" name="password" class="form-control input chat-input"
-            placeholder="Senha" ngModel required/>
+          <div class="input-group" #flag>
+            <input type="password" name="password" 
+              class="form-control input chat-input"
+              placeholder="Senha" ngModel required>
+            <span class="input-group-btn">
+              <button class="btn btn-default reveal" (click)="handlePassword()">
+                <span class="glyphicon glyphicon-eye-open"></span>
+              </button>
+            </span>
+          </div>
+            
           <br>
           <div class="wrapper">    
             <button class="btn btn-success" [disabled]="!fLogin.valid">Login</button>

@@ -1,3 +1,4 @@
+import { ListAdminComponent } from './list-admin/list-admin.component';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
@@ -13,6 +14,7 @@ import { LoginDisabledService } from './servicos/login-disabled.service';
 
 const APP_ROUTERS: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+  { path: 'cadastro-adm', component: ListAdminComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-sala', component: ListSalaComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-usuario', component: ListUserComponent, canActivate: [AuthGuardService] },
   { path: '' , component: LoginComponent, canActivate: [LoginDisabledService]},

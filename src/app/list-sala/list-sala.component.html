@@ -6,11 +6,11 @@
       <div class="btn-group">
           <button class="btn btn-success btn-sm"
             (click)="showModal(-1, 'Cadastrar')">
-            Nova
+            Nova <span class="glyphicon glyphicon-plus"></span>
           </button>
           <button class="btn btn-danger btn-sm"
             (click)="deletarTodos('salas')" [disabled]="salas.length === 0">
-            Deletar todas
+            Deletar todas <span class="glyphicon glyphicon-trash"></span>
           </button>
         </div>
     </h3>
@@ -28,11 +28,11 @@
         <div class="btn-group">
             <button class="btn btn-success btn-sm"
               (click)="novoHorario(id)" [disabled]="id === -1">
-              Novo
+              Novo <span class="glyphicon glyphicon-plus"></span>
             </button>
             <button class="btn btn-danger btn-sm"
               (click)="deletarTodos('horarios', id)" [disabled]="id === -1">
-              Deletar todos
+              Deletar todos <span class="glyphicon glyphicon-trash"></span>
             </button>
           </div>
       
@@ -52,15 +52,27 @@
         <td>{{ horario.hora_fim }}</td>
         <td>{{ horario.tipo_user }}</td>
         <td>
-          <button class="btn btn-primary" (click)='editarHorario(idx)' >Editar Horario</button>
-          <button class="btn btn-danger"(click)='deletarHorario(idx, horario.id)'>Excluir Horario</button>
+          <button class="btn btn-primary" (click)='editarHorario(idx)'
+            tooltip="Editar horário">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button class="btn btn-danger"(click)='deletarHorario(idx, horario.id)'
+            tooltip="Deletar horário">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
         </td>
       </tr>
       
     </table>
     <div class="button_salas row">
-      <button class="btn btn-primary" (click)="showModal(id)" [disabled]= 'id == -1'>Editar Sala</button>
-      <button class="btn btn-danger" (click)="deletarSala(id)" [disabled]= 'id == -1'>Deletar Sala</button>
+      <button class="btn btn-primary" (click)="showModal(id)" [disabled]= 'id == -1'
+        tooltip="Editar sala">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <button class="btn btn-danger" (click)="deletarSala(id)" [disabled]= 'id == -1'
+        tooltip="Deletar sala">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
     </div>
   </div>
 </div>

@@ -33,12 +33,34 @@ export class ListUserComponent implements OnInit {
     }
   }
 
+  acessosTransform(acessos: any[]) {
+    const tamanho = acessos.length;
+    if (!tamanho) {
+      return 'Nenhuma';
+    } else if (tamanho > 4) {
+      return tamanho;
+    }
+
+    console.log(acessos);
+
+    let acessosT = '[';
+
+    for (let i = 0; i < tamanho - 1; i++) {
+      acessosT += acessos[i].nome_sala + ', ';
+    }
+
+    acessosT += acessos[tamanho - 1].nome_sala + ']';
+
+    return acessosT;
+  }
+
   showModal(index, mode = 'Editar') {
     const disposable = this.dialogService.addDialog(ModalUserComponent, {
         title: 'Usuário - ' + mode,
         user: index >= 0 ? this.users[index] : {},
         mode: mode,
-        users: this.users
+        users: this.users,
+        index: index
       })
         .subscribe((isConfirmed) => {});
   }
