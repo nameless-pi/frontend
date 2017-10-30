@@ -4,6 +4,8 @@ import { DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from '../servicos/database.service';
 import { ModalUserComponent } from './modal-user/modal-user.component';
 
+import {Observable} from 'rxjs/Observable';
+
 @Component({
   selector: 'app-list-user',
   templateUrl: './list-user.component.html',
@@ -28,8 +30,13 @@ export class ListUserComponent implements OnInit {
     if (confirm('Você realmente deseja apagar este usuário?')) {
       this.dbService
         .deletarRecurso('usuarios', this.users[id].id)
-        .subscribe();
-      this.users.splice(id, 1);
+        .catch(this.handleError)
+        .subscribe(res => {
+            if ( res.status === 204 ) {
+              this.users.splice(id, 1);
+              alert('Usuario Apagado com Sucesso!!');
+            }
+        });
     }
   }
 
@@ -68,11 +75,36 @@ export class ListUserComponent implements OnInit {
   deletarTodos() {
     if (confirm('Deseja realmente apagar todos usuários?')) {
       this.dbService.deletarTodosRecursos('usuarios')
+        .catch(this.handleError)
         .subscribe(res => {
           if (res.status === 204) {
+            alert('Todos Usuarios apagados com sucesso!');
             this.users = [];
           }
         });
     }
+  }
+
+
+
+  public handleError(error: any) {
+    const errMsg = error.status;
+    if (errMsg === 403) {
+      alert('Este usuário já existe!');
+
+    } else if (errMsg === 400) {
+      alert('Ops, há algo errado nesta página ou configurações do servidor');
+
+    } else if (errMsg === 401) {
+      alert('Credenciais inválidas');
+
+    } else if (errMsg === 404) {
+      alert('Usuário não Existe!');
+
+    } else if (errMsg === 0) {
+      alert('Erro de conexão, tente novamente!');
+    }
+
+    return Observable.throw(errMsg);
   }
 }

@@ -66,16 +66,24 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
   cadastrarHorario(body) {
     this.dbService.criarRecurso('horarios', body)
       .catch(this.handleError)
-      .subscribe();
-      this.close();
+      .subscribe( res => {
+        if (res.status === 201) {
+          alert('Horário Cadastrado Com Sucesso');
+          this.close();
+        }
+      });
   }
 
   editarHorario(id, body) {
       this.dbService
         .editarRecurso('horarios', id, body)
         .catch(this.handleError)
-        .subscribe();
-      this.close();
+        .subscribe(res => {
+          if (res.status === 200) {
+            alert('Horário Alterado Com Sucesso!');
+            this.close();
+          }
+        });
   }
 
   public handleError(error: any) {
@@ -95,8 +103,6 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
     } else if (errMsg === 0) {
       alert('Erro de conexão, tente novamente!');
 
-    } else {
-      alert('Horário cadastrado com sucesso!');
     }
     // window.location.reload();
     return Observable.throw(errMsg);
