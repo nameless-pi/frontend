@@ -7,10 +7,6 @@
         (click)="showModal(-1, 'Cadastrar')">
         Novo <span class="glyphicon glyphicon-plus"></span>
       </button>
-      <button class="btn btn-danger btn-sm"
-        (click)="deletarTodos()">
-        Deletar todos <span class="glyphicon glyphicon-trash"></span>
-      </button>
     </div>
   </h3>
   <table class="table table-hover">
@@ -28,7 +24,8 @@
           <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <button type="submit" class="btn btn-danger" (click)="apagarAdmin(idx)"
-        tooltip="Deletar administrador">
+        tooltip="Deletar administrador" [disabled]="admins.length === 1"
+        >
           <span class="glyphicon glyphicon-trash"></span>
         </button>
       </td>
