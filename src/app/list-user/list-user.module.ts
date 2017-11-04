@@ -9,18 +9,20 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2
 
 import { ListUserComponent } from './list-user.component';
 import { ModalUserComponent } from './modal-user/modal-user.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HomeModule,
+    SharedModule,
     AngularMultiSelectModule,
     TooltipModule.forRoot()
   ],
   declarations: [
     ListUserComponent,
-    ModalUserComponent,
+    ModalUserComponent
   ],
   exports: [
     ListUserComponent,

@@ -4,7 +4,7 @@ import { DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from '../servicos/database.service';
 import { ModalUserComponent } from './modal-user/modal-user.component';
 
-import {Observable} from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -14,29 +14,27 @@ import {Observable} from 'rxjs/Observable';
 export class ListUserComponent implements OnInit {
   users: any = [];
 
-  constructor(private dbService: DatabaseService, private dialogService: DialogService) { }
+  constructor(
+    private dbService: DatabaseService,
+    private dialogService: DialogService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.dbService.getRecurso('usuarios')
-      .map(res => res.json())
-      .subscribe((data) => {
-        this.users = data;
-        console.log(this.users);
-      });
-
+      .then(data => this.users = data)
+      .catch(err => this.handleError(err.status));
   }
 
   apagarUsuario(id) {
     if (confirm('Você realmente deseja apagar este usuário?')) {
       this.dbService
         .deletarRecurso('usuarios', this.users[id].id)
-        .catch(this.handleError)
-        .subscribe(res => {
-            if ( res.status === 204 ) {
-              this.users.splice(id, 1);
-              alert('Usuario Apagado com Sucesso!!');
-            }
-        });
+        .then(res => {
+            this.users.splice(id, 1);
+            alert('Usuário Apagado com Sucesso!!');
+        })
+        .catch(err => this.handleError(err.status));
     }
   }
 
@@ -45,10 +43,8 @@ export class ListUserComponent implements OnInit {
     if (!tamanho) {
       return 'Nenhuma';
     } else if (tamanho > 4) {
-      return tamanho;
+      return tamanho + ' salas';
     }
-
-    console.log(acessos);
 
     let acessosT = '[';
 
@@ -57,7 +53,6 @@ export class ListUserComponent implements OnInit {
     }
 
     acessosT += acessos[tamanho - 1].nome_sala + ']';
-
     return acessosT;
   }
 
@@ -75,36 +70,29 @@ export class ListUserComponent implements OnInit {
   deletarTodos() {
     if (confirm('Deseja realmente apagar todos usuários?')) {
       this.dbService.deletarTodosRecursos('usuarios')
-        .catch(this.handleError)
-        .subscribe(res => {
-          if (res.status === 204) {
-            alert('Todos Usuarios apagados com sucesso!');
-            this.users = [];
-          }
-        });
+      .then(res => {
+          alert('Todos usuários apagados com sucesso!');
+          this.users = [];
+      })
+      .catch(err => this.handleError(err.status));
     }
   }
 
-
-
-  public handleError(error: any) {
-    const errMsg = error.status;
-    if (errMsg === 403) {
+  private handleError(error: number) {
+    if (error === 403) {
       alert('Este usuário já existe!');
-
-    } else if (errMsg === 400) {
+    } else if (error === 400) {
       alert('Ops, há algo errado nesta página ou configurações do servidor');
-
-    } else if (errMsg === 401) {
-      alert('Credenciais inválidas');
-
-    } else if (errMsg === 404) {
-      alert('Usuário não Existe!');
-
-    } else if (errMsg === 0) {
+    } else if (error === 401) {
+      localStorage.removeItem('token');
+      this.router.navigate([''])
+        .then(() => {
+          alert('Credenciais inválidas');
+        });
+    } else if (error === 404) {
+      alert('Este usuário não existe!');
+    } else if (error === 0) {
       alert('Erro de conexão, tente novamente!');
     }
-
-    return Observable.throw(errMsg);
   }
 }

@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
 
   clearToken() {
     localStorage.removeItem('token');
+    localStorage.removeItem('flag');
     this.router.navigate(['']);
   }
 }

@@ -26,36 +26,50 @@ export class DatabaseService {
 
   getRecurso(recurso) {
     return this.authHttp
-      .get(`${APP_SERVER}/${recurso}`);
+      .get(`${APP_SERVER}/${recurso}`)
+      .map(res => res.json())
+      .toPromise();
   }
 
   getRecursoId(recurso, id) {
     return this.authHttp
-      .get(`${APP_SERVER}/${recurso}/${id}`);
+      .get(`${APP_SERVER}/${recurso}/${id}`)
+      .map(res => res.json())
+      .toPromise();
   }
 
   criarRecurso(recurso, body) {
     return this.authHttp
-      .post(`${APP_SERVER}/${recurso}`, body);
+      .post(`${APP_SERVER}/${recurso}`, body)
+      .map(res => res.json())
+      .toPromise();
   }
 
   editarRecurso(recurso, id, body) {
     return this.authHttp
-      .put(`${APP_SERVER}/${recurso}/${id}`, body);
+      .put(`${APP_SERVER}/${recurso}/${id}`, body)
+      .map(res => res.json())
+      .toPromise();
   }
 
   deletarRecurso(recurso, id) {
     return this.authHttp
-      .delete(`${APP_SERVER}/${recurso}/${id}`);
+      .delete(`${APP_SERVER}/${recurso}/${id}`)
+      .map(res => res.json())
+      .toPromise();
   }
 
   deletarTodosRecursos(recurso) {
     return this.authHttp
-      .delete(`${APP_SERVER}/${recurso}`);
+      .delete(`${APP_SERVER}/${recurso}`)
+      .map(res => res.json())
+      .toPromise();
   }
 
   getSalasSelect() {
     return this.authHttp
-      .get(`${APP_SERVER}/json/salas`);
+      .get(`${APP_SERVER}/json/salas`)
+      .map(res => res.json())
+      .toPromise();
   }
 }

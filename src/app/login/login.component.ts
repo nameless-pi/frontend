@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
 
   async onSubmit(fLogin) {
     if (fLogin.valid) {
-      console.log(fLogin.value);
       this.bool = await this.loginService.login(fLogin.value.login, fLogin.value.password);
       if (this.bool) {
         this.router.navigate(['/home']);

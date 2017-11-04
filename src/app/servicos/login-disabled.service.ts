@@ -9,9 +9,10 @@ export class LoginDisabledService implements CanActivate {
 
   canActivate() {
     const token = localStorage.getItem('token');
-    if (token != null) {
+    const flag = localStorage.getItem('flag');
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
       this.router.navigate(['home']);
-      return this.jwtHelper.isTokenExpired(token);
+      return false;
     }
     return true;
   }

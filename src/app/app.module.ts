@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -49,7 +48,7 @@ import { LoginDisabledService } from './servicos/login-disabled.service';
     JwtHelper,
     DatabaseService,
     AuthGuardService,
-    LoginDisabledService
+    LoginDisabledService,
   ],
   bootstrap: [AppComponent]
 })
