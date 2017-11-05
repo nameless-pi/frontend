@@ -116,7 +116,7 @@ export class ListSalaComponent implements OnInit {
         this.salas[id].horarios = [];
       })
       .catch(err => this.handleError('Horário', err.status));
-    } else if (confirm('Deseja realmente apagar todas as salas?')) {
+    } else if (recurso === 'salas' && confirm('Deseja realmente apagar todas as salas?')) {
       this.dbService.deletarTodosRecursos(recurso)
       .then(res => {
         alert('Salas Excluidas Com Sucesso!');
