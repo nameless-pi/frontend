@@ -4,41 +4,43 @@
   <h3>Usuários
     <div class="btn-group">
       <button class="btn btn-success btn-sm"
-        (click)="showModal(-1, 'Cadastrar')">
+        (click)="showModal(-1, 'Cadastrar')" style="border-radius: 4px;">
         Novo <span class="glyphicon glyphicon-plus"></span>
       </button>
       <button class="btn btn-danger btn-sm"
-        (click)="deletarTodos()">
+        (click)="deletarTodos()" style="margin-left: 3px; border-radius: 4px;">
         Deletar todos <span class="glyphicon glyphicon-trash"></span>
       </button>
     </div>
   </h3>
-  <table class="table table-hover">
-    <tr>
-      <th>Tipo</th>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>RFID</th>
-      <th>Salas Permitidas</th>
-      <th>Outros</th>
+  <div class="control_table">
+    <table class="table table-hover">
+      <tr>
+        <th>Tipo</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>RFID</th>
+        <th>Salas Permitidas</th>
+        <th>Outros</th>
 
-    </tr>
-    <tr *ngFor="let user of users; let idx = index">
-      <td>{{ user.tipo }}</td>
-      <td>{{ user.nome }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.rfid }}</td>
-      <td>{{ acessosTransform(user.direito_acesso) }}</td>
-      <td>
-        <button type="submit" class="btn btn-primary" (click)="showModal(idx)"
-          tooltip="Editar usuário">
-          <span class="glyphicon glyphicon-pencil"></span>
-        </button>
-        <button type="submit" class="btn btn-danger" (click)="apagarUsuario(idx)"
-          tooltip="Deletar usuário">
-          <span class="glyphicon glyphicon-trash"></span>
-        </button>
-      </td>
-    </tr>
-  </table>
+      </tr>
+      <tr *ngFor="let user of users; let idx = index">
+        <td>{{ user.tipo }}</td>
+        <td>{{ user.nome }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.rfid }}</td>
+        <td>{{ acessosTransform(user.direito_acesso) }}</td>
+        <td>
+          <button type="submit" class="btn btn-primary" (click)="showModal(idx)"
+            tooltip="Editar usuário">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+          <button type="submit" class="btn btn-danger" (click)="apagarUsuario(idx)"
+            tooltip="Deletar usuário">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
