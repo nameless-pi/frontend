@@ -7,34 +7,29 @@
         (click)="showModal(-1, 'Cadastrar')" style="border-radius: 4px;">
         Novo <span class="glyphicon glyphicon-plus"></span>
       </button>
-      <button class="btn btn-danger btn-sm bnt-delet"
-        (click)="deletarTodos()" style="margin-left: 4px; border-radius: 4px;">
-        Deletar todos <span class="glyphicon glyphicon-trash"></span>
-      </button>
+
     </div>
   </h3>
-  <div class="control_table">
-    <table class="table table-hover">
-      <tr>
-        <th>Nome</th>
-        <th>Login</th>
-        <th>Outros</th>
-      </tr>
-      <tr *ngFor="let adm of admins; let idx = index">
-        <td>{{ adm.nome }}</td>
-        <td>{{ adm.login }}</td>
-        <td>
-          <button type="submit" class="btn btn-primary" (click)="showModal(idx)"
-            tooltip="Editar administrador">
-            <span class="glyphicon glyphicon-pencil"></span>
-          </button>
-          <button type="submit" class="btn btn-danger" (click)="apagarAdmin(idx)"
-          tooltip="Deletar administrador">
-            <span class="glyphicon glyphicon-trash"></span>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
-
+  <table class="table table-hover">
+    <tr>
+      <th>Nome</th>
+      <th>Login</th>
+      <th>Outros</th>
+    </tr>
+    <tr *ngFor="let adm of admins; let idx = index">
+      <td>{{ adm.nome }}</td>
+      <td>{{ adm.login }}</td>
+      <td>
+        <button type="submit" class="btn btn-primary" (click)="showModal(idx)"
+          tooltip="Editar administrador">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <button type="submit" class="btn btn-danger" (click)="apagarAdmin(idx)"
+        tooltip="Deletar administrador" [disabled]="admins.length === 1"
+        >
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>

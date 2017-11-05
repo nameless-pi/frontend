@@ -20,7 +20,7 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
   ],
   declarations: [
     ListUserComponent,
-    ModalUserComponent,
+    ModalUserComponent
   ],
   exports: [
     ListUserComponent,

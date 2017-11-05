@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from './../../servicos/database.service';
@@ -5,10 +6,11 @@ import { Observable } from 'rxjs/Observable';
 
 export interface ConfirmModel {
   title: string;
-  horario: any;
+  horarios: any;
+  index: number;
   tipo: string;
   buttonText: string;
-  salaId: number;
+  salaId: any;
 }
 
 @Component({
@@ -19,10 +21,12 @@ export interface ConfirmModel {
 })
 export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel, OnInit {
   title: string;
-  horario: any;
   tipo: string;
   buttonText: string;
-  salaId: number;
+  salaId: any;
+  horarios: any;
+  index: number;
+  horario: any;
 
   typeUsers = ['Aluno', 'Professor', 'Servente'];
   dias = ['Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo'];
@@ -32,11 +36,17 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
   myTime = new Date();
   ismeridian = false;
 
-  constructor( dialogService: DialogService, private dbService: DatabaseService) {
+  constructor(
+    dialogService: DialogService,
+    private dbService: DatabaseService,
+    private router: Router
+  ) {
     super(dialogService);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.horario = this.index !== undefined ? this.horarios[this.index] : {};
+  }
 
   onSubmit(formModalHora) {
     if (formModalHora.value.horarioFim < formModalHora.value.horarioInicio) {
@@ -53,7 +63,6 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
         'tipo_user' : formModalHora.value.tipo
       };
 
-      console.log(this.body);
       if (this.tipo === 'editar') {
         this.editarHorario(this.horario.id, this.body);
       } else if (this.tipo === 'novo') {
@@ -65,46 +74,41 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
 
   cadastrarHorario(body) {
     this.dbService.criarRecurso('horarios', body)
-      .catch(this.handleError)
-      .subscribe( res => {
-        if (res.status === 201) {
-          alert('Horário Cadastrado Com Sucesso');
-          this.close();
-        }
-      });
+      .then(res => {
+        alert('Horário cadastrado com sucesso');
+        this.horarios.push(res);
+        this.close();
+      })
+      .catch(err => this.handleError(err.status));
   }
 
   editarHorario(id, body) {
-      this.dbService
-        .editarRecurso('horarios', id, body)
-        .catch(this.handleError)
-        .subscribe(res => {
-          if (res.status === 200) {
-            alert('Horário Alterado Com Sucesso!');
-            this.close();
-          }
-        });
+    this.dbService
+      .editarRecurso('horarios', id, body)
+      .then(res => {
+        alert('Horário alterado com sucesso!');
+        this.horarios[this.index] = res;
+        this.close();
+      })
+      .catch(err => this.handleError(err.status));
   }
 
-  public handleError(error: any) {
-    const  errMsg = error.status;
-    if (errMsg === 403) {
+  private handleError(error: number) {
+    if (error === 403) {
       alert('Este horário já existe!');
-
-    } else if (errMsg === 400) {
-      alert('Ops! Há algo errado nesta página ou no servidor');
-
-    } else if (errMsg === 401) {
-      alert('Credenciais inválidas');
-
-    } else if (errMsg === 404) {
-      alert('Dado não existente!');
-
-    } else if (errMsg === 0) {
+    } else if (error === 400) {
+      alert('Ops, há algo errado nesta página ou configurações do servidor');
+    } else if (error === 401) {
+      this.close();
+      localStorage.removeItem('token');
+      this.router.navigate([''])
+        .then(() => {
+          alert('Credenciais inválidas');
+        });
+    } else if (error === 404) {
+      alert('Este horário não existe!');
+    } else if (error === 0) {
       alert('Erro de conexão, tente novamente!');
-
     }
-    // window.location.reload();
-    return Observable.throw(errMsg);
   }
 }

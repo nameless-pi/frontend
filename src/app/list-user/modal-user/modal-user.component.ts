@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DropdownSettings } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown/multiselect.interface';
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
@@ -33,12 +34,15 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
   selectedItems = [];
   typeUsers = ['Aluno', 'Professor', 'Servente'];
 
-  constructor(private dbService: DatabaseService, dialogService: DialogService) {
+  constructor(
+    private dbService: DatabaseService,
+    dialogService: DialogService,
+    private router: Router
+  ) {
     super(dialogService);
   }
 
   ngOnInit() {
-    console.log(this.user);
     this.fillSelect();
     this.dropdownSettings = {
       text: 'Selecione as salas',
@@ -52,16 +56,16 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
 
   fillSelect() {
     this.dbService.getSalasSelect()
-    .map(res => res.json())
-    .subscribe((data: Array<any>) => {
-      for (let i = 0; i < data.length; i++) {
-        this.dropdownList.push({
-          'id': i + 1,
-          'itemName': data[i].nome,
-          'id_sala': data[i].id
-        });
-      }
-    });
+      .then(data => {
+        for (let i = 0; i < data.length; i++) {
+          this.dropdownList.push({
+            'id': i + 1,
+            'itemName': data[i].nome,
+            'id_sala': data[i].id
+          });
+        }
+      })
+      .catch(err => this.handleError(err.status));
   }
 
   setBeforeSelectedSalas() {
@@ -95,50 +99,42 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
 
       if (this.mode === 'Editar') {
         this.dbService.editarRecurso('usuarios', user.id, this.body)
-          .catch( this.handleError )
-          .subscribe(res => {
-          if ( res.status === 200 ) {
-            alert('Usuário Alterado com Sucesso!');
-            this.user = res.json();
-            this.users[this.index] = this.user;
-            this.close();
-          }
-
-        });
+        .then(res => {
+          alert('Usuário alterado com Sucesso!');
+          this.user = res;
+          this.users[this.index] = this.user;
+          this.close();
+        })
+        .catch(err => this.handleError(err.status));
       } else {
         this.dbService.criarRecurso('usuarios', this.body)
-          .catch(this.handleError)
-          .subscribe(res => {
-            if (res.status === 201) {
-              this.users.push(res.json());
-              alert('Usuario Criado com Sucesso!');
-              this.close();
-            }
-          });
+        .then(res => {
+          this.users.push(res);
+          alert('Usuário criado com Sucesso!');
+          this.close();
+        })
+        .catch(err => this.handleError(err.status));
       }
     }
 
   }
 
-  public handleError(error: any) {
-    const errMsg = error.status;
-
-    if (errMsg === 403) {
-      alert('Este email ja está cadastrado! Use outro Email!');
-
-    } else if (errMsg === 400) {
+  private handleError(error: number) {
+    if (error === 403) {
+      alert('Este email já está cadastrado!');
+    } else if (error === 400) {
       alert('Ops, há algo errado nesta página ou configurações do servidor');
-
-    } else if (errMsg === 401) {
-      alert('Credenciais inválidas');
-
-    } else if (errMsg === 404) {
-      alert('Usuario Não Encontrado!');
-
-    } else if (errMsg === 0) {
+    } else if (error === 401) {
+      this.close();
+      localStorage.removeItem('token');
+      this.router.navigate([''])
+        .then(() => {
+          alert('Credenciais inválidas');
+        });
+    } else if (error === 404) {
+      alert('Este usuário não existe!');
+    } else if (error === 0) {
       alert('Erro de conexão, tente novamente!');
     }
-
-    return Observable.throw(errMsg);
   }
 }

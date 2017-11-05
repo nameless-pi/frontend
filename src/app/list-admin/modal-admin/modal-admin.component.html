@@ -1,0 +1,47 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()">&times;</button>
+      <h4 class="modal-title">{{ title }}</h4>
+    </div>
+
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div class="modal-body">
+        <div class="form-group" *ngIf="mode !== 'Cadastrar'">
+          <label>ID</label>
+          <input name="id" class="form-control" type="text" [ngModel]="admin.id" readonly/>
+        </div>
+        <div class="form-group">
+          <label>Nome</label>
+          <input name="nome" class="form-control" type="text" [ngModel]="admin.nome" required/>
+        </div>
+        <div class="form-group">
+          <label>Login</label>
+          <input name="login" class="form-control" type="text" [ngModel]="admin.login" required/>
+        </div>
+        <div *ngIf="mode === 'Editar'">
+          <div class="form-group">
+            <label>Senha atual</label>
+            <input name="current_password" class="form-control" type="password"
+              [ngModel]="admin.password" required/>
+          </div>
+          <div class="form-group">
+            <label>Nova senha</label>
+            <input name="new_password" class="form-control" type="password"
+              [ngModel]="admin.password"/>
+          </div>
+        </div>
+          <div class="form-group" *ngIf="mode === 'Cadastrar'">
+            <label>Senha</label>
+            <input name="password" class="form-control" type="password" 
+              [ngModel]="admin.password" required/>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!f.valid">{{ mode }}</button>
+        <button type="button" class="btn btn-danger" (click)="close()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
