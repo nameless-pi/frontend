@@ -109,7 +109,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
       } else {
         this.dbService.criarRecurso('usuarios', this.body)
         .then(res => {
-          this.users.push(res.json());
+          this.users.push(res);
           alert('Usuário criado com Sucesso!');
           this.close();
         })
