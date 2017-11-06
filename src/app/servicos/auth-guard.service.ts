@@ -1,4 +1,4 @@
-import { JwtHelper,  } from 'angular2-jwt';
+import { JwtHelper } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
@@ -12,7 +12,10 @@ export class AuthGuardService implements CanActivate {
 
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
-    } else if (flag != null || token && this.jwtHelper.isTokenExpired(token)) {
+    } else if (
+      flag != null ||
+      (token && this.jwtHelper.isTokenExpired(token))
+    ) {
       if (flag) {
         alert('Administrador logado removido!');
         localStorage.removeItem('flag');
@@ -24,5 +27,4 @@ export class AuthGuardService implements CanActivate {
     }
     return false;
   }
-
 }

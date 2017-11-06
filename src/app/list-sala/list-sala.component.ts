@@ -12,7 +12,6 @@ import { DatabaseService } from '../servicos/database.service';
   templateUrl: './list-sala.component.html',
   styleUrls: ['./list-sala.component.css']
 })
-
 export class ListSalaComponent implements OnInit {
   @ViewChild('button') btn: ElementRef;
   id = -1;
@@ -22,12 +21,12 @@ export class ListSalaComponent implements OnInit {
     private dbService: DatabaseService,
     private dialogService: DialogService,
     private router: Router
-    ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.dbService.getRecurso('salas')
-      .then(data => this.salas = data)
+    this.dbService
+      .getRecurso('salas')
+      .then(data => (this.salas = data))
       .catch(err => this.handleError('Sala', err.status));
   }
 
@@ -37,12 +36,14 @@ export class ListSalaComponent implements OnInit {
       this.btn.nativeElement.children[idx].className += ' active';
       for (let i = 0; i < this.btn.nativeElement.children.length; i++) {
         if (i !== idx) {
-          this.btn.nativeElement.children[i].className = 'btn list-group-item li_sala';
+          this.btn.nativeElement.children[i].className =
+            'btn list-group-item li_sala';
         }
       }
     }
     if (idx === this.id) {
-      this.btn.nativeElement.children[idx].className = 'btn list-group-item li_sala';
+      this.btn.nativeElement.children[idx].className =
+        'btn list-group-item li_sala';
       this.id = -1;
     } else {
       this.id = idx;
@@ -51,52 +52,75 @@ export class ListSalaComponent implements OnInit {
 
   deletarSala(index) {
     if (confirm('Você realmente deseja apagar esta sala?')) {
-      this.dbService.deletarRecurso('salas', this.salas[index].id)
-      .then( res => {
-        alert('Sala Excluida com Sucesso!');
-        this.salas.splice(index, 1);
-        this.id = -1;
-      })
-      .catch(err => this.handleError('Sala', err.status));
+      this.dbService
+        .deletarRecurso('salas', this.salas[index].id)
+        .then(res => {
+          alert('Sala Excluida com Sucesso!');
+          this.salas.splice(index, 1);
+          this.id = -1;
+        })
+        .catch(err => this.handleError('Sala', err.status));
     }
   }
 
   showModal(id, mode = 'Editar') {
-    const disposable = this.dialogService.addDialog(ModalSalaComponent, {
-      title: 'Sala - ' + mode,
-      sala: id >= 0 ? this.salas[id] : {},
-      salas: this.salas,
-      mode: mode
-    })
-      .subscribe((isConfirmed) => {});
-
+    if (this.dbService.checkToken()) {
+      localStorage.removeItem('token');
+      this.router
+        .navigate([''])
+        .then(() => alert('Sua sessão expirou, logue novamente!'));
+      return;
+    }
+    const disposable = this.dialogService
+      .addDialog(ModalSalaComponent, {
+        title: 'Sala - ' + mode,
+        sala: id >= 0 ? this.salas[id] : {},
+        salas: this.salas,
+        mode: mode
+      })
+      .subscribe(isConfirmed => {});
   }
 
   novoHorario() {
-    const Disposable = this.dialogService.addDialog(ModalHorarioComponent, {
-      tipo: 'novo',
-      title: 'Horário - Cadastro',
-      buttonText: 'Cadastrar',
-      salaId: this.salas[this.id].id,
-      horarios: this.salas[this.id].horarios
-    })
-      .subscribe((isConfirmed) => {});
+    if (this.dbService.checkToken()) {
+      localStorage.removeItem('token');
+      this.router
+        .navigate([''])
+        .then(() => alert('Sua sessão expirou, logue novamente!'));
+      return;
+    }
+    const Disposable = this.dialogService
+      .addDialog(ModalHorarioComponent, {
+        tipo: 'novo',
+        title: 'Horário - Cadastro',
+        buttonText: 'Cadastrar',
+        salaId: this.salas[this.id].id,
+        horarios: this.salas[this.id].horarios
+      })
+      .subscribe(isConfirmed => {});
   }
 
   editarHorario(id) {
-    const Disposable = this.dialogService.addDialog(ModalHorarioComponent, {
-      tipo: 'editar',
-      title: 'Horário - Editar',
-      buttonText: 'Editar',
-      salaId: this.salas[this.id].id,
-      horarios: this.salas[this.id].horarios,
-      index: id
-    })
-      .subscribe((isConfirmed) => {});
+    if (this.dbService.checkToken()) {
+      localStorage.removeItem('token');
+      this.router
+        .navigate([''])
+        .then(() => alert('Sua sessão expirou, logue novamente!'));
+      return;
     }
+    const Disposable = this.dialogService
+      .addDialog(ModalHorarioComponent, {
+        tipo: 'editar',
+        title: 'Horário - Editar',
+        buttonText: 'Editar',
+        salaId: this.salas[this.id].id,
+        horarios: this.salas[this.id].horarios,
+        index: id
+      })
+      .subscribe(isConfirmed => {});
+  }
 
   deletarHorario(id, id_horario) {
-    //console.log(id);
     if (confirm('Você realmente deseja apagar este horário?')) {
       this.dbService
         .deletarRecurso('horarios', id_horario)
@@ -109,20 +133,28 @@ export class ListSalaComponent implements OnInit {
   }
 
   deletarTodos(recurso, id = -1) {
-    if (recurso === 'horarios' && confirm('Deseja realmente apagar todos os horários ?')) {
-      this.dbService.deletarRecurso('salas/horarios', this.salas[id].id)
-      .then(res => {
-        alert('Todos Horários Excluidos Com Sucesso!');
-        this.salas[id].horarios = [];
-      })
-      .catch(err => this.handleError('Horário', err.status));
-    } else if (recurso === 'salas' && confirm('Deseja realmente apagar todas as salas?')) {
-      this.dbService.deletarTodosRecursos(recurso)
-      .then(res => {
-        alert('Salas Excluidas Com Sucesso!');
-        this.salas = [];
-      })
-      .catch(err => this.handleError('Sala', err.status));
+    if (
+      recurso === 'horarios' &&
+      confirm('Deseja realmente apagar todos os horários ?')
+    ) {
+      this.dbService
+        .deletarRecurso('salas/horarios', this.salas[id].id)
+        .then(res => {
+          alert('Todos Horários Excluidos Com Sucesso!');
+          this.salas[id].horarios = [];
+        })
+        .catch(err => this.handleError('Horário', err.status));
+    } else if (
+      recurso === 'salas' &&
+      confirm('Deseja realmente apagar todas as salas?')
+    ) {
+      this.dbService
+        .deletarTodosRecursos(recurso)
+        .then(res => {
+          alert('Salas Excluidas Com Sucesso!');
+          this.salas = [];
+        })
+        .catch(err => this.handleError('Sala', err.status));
     }
   }
 
@@ -135,10 +167,9 @@ export class ListSalaComponent implements OnInit {
       alert('Ops, há algo errado nesta página ou configurações do servidor');
     } else if (error === 401) {
       localStorage.removeItem('token');
-      this.router.navigate([''])
-        .then(() => {
-          alert('Credenciais inválidas');
-        });
+      this.router.navigate(['']).then(() => {
+        alert('Credenciais inválidas');
+      });
     } else if (error === 404) {
       alert(`Est${sufix} ${resource.toLowerCase()} não existe!`);
     } else if (error === 0) {
@@ -146,4 +177,3 @@ export class ListSalaComponent implements OnInit {
     }
   }
 }
-

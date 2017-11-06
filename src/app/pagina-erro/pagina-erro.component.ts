@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pagina-erro.component.css']
 })
 export class PaginaErroComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
   ngOnInit() {}
 }

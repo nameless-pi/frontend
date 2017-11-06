@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
@@ -26,13 +26,8 @@ import { AuthGuardService } from './servicos/auth-guard.service';
 import { LoginDisabledService } from './servicos/login-disabled.service';
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    PaginaErroComponent,
-    PesquisaComponent,
-  ],
+  declarations: [AppComponent, PaginaErroComponent, PesquisaComponent],
   imports: [
     routing,
     HttpModule,
@@ -44,13 +39,13 @@ import { PesquisaComponent } from './pesquisa/pesquisa.component';
     ListUserModule,
     ListSalaModule,
     ListAdminModule,
-    BootstrapModalModule.forRoot({container: document.body})
+    BootstrapModalModule.forRoot({ container: document.body })
   ],
   providers: [
     JwtHelper,
     DatabaseService,
     AuthGuardService,
-    LoginDisabledService,
+    LoginDisabledService
   ],
   bootstrap: [AppComponent]
 })

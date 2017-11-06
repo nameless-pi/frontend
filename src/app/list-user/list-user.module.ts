@@ -18,14 +18,8 @@ import { ModalUserComponent } from './modal-user/modal-user.component';
     AngularMultiSelectModule,
     TooltipModule.forRoot()
   ],
-  declarations: [
-    ListUserComponent,
-    ModalUserComponent
-  ],
-  exports: [
-    ListUserComponent,
-    ModalUserComponent
-  ],
+  declarations: [ListUserComponent, ModalUserComponent],
+  exports: [ListUserComponent, ModalUserComponent],
   entryComponents: [ModalUserComponent]
 })
-export class ListUserModule { }
+export class ListUserModule {}

@@ -12,15 +12,34 @@ import { AuthGuardService } from './servicos/auth-guard.service';
 import { ModuleWithProviders } from '@angular/core';
 import { LoginDisabledService } from './servicos/login-disabled.service';
 
-
 const APP_ROUTERS: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
-  { path: 'cadastro-adm', component: ListAdminComponent, canActivate: [AuthGuardService] },
-  { path: 'cadastro-sala', component: ListSalaComponent, canActivate: [AuthGuardService] },
-  { path: 'cadastro-usuario', component: ListUserComponent, canActivate: [AuthGuardService] },
-  { path: 'respesquisa', component: PesquisaComponent, canActivate: [AuthGuardService]},
-  { path: '' , component: LoginComponent, canActivate: [LoginDisabledService]},
-  { path: '**' , component: PaginaErroComponent, canActivate: [AuthGuardService]}
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'cadastro-adm',
+    component: ListAdminComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'cadastro-sala',
+    component: ListSalaComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'cadastro-usuario',
+    component: ListUserComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'respesquisa',
+    component: PesquisaComponent,
+    canActivate: [AuthGuardService]
+  },
+  { path: '', component: LoginComponent, canActivate: [LoginDisabledService] },
+  {
+    path: '**',
+    component: PaginaErroComponent,
+    canActivate: [AuthGuardService]
+  }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTERS);

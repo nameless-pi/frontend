@@ -9,34 +9,24 @@ import { forEach } from '@angular/router/src/utils/collection';
   templateUrl: './pesquisa.component.html',
   styleUrls: ['./pesquisa.component.css']
 })
-
 export class PesquisaComponent implements OnInit {
   pesquisa: any = [];
-  salas:  any = [];
+  salas: any = [];
   horarios: any = [];
   usuarios: any = [];
   nomeSala = 'false';
- 
+
   constructor(
     private dbService: DatabaseService,
     private dialogService: DialogService,
-    private router: Router ) { 
-      
-    }
- 
+    private router: Router
+  ) {}
 
-  ngOnInit() {
-     
-  }
+  ngOnInit() {}
 
   onPesquisa(valor) {
-    this.dbService.getRecurso('salas')
-    .then(data => this.salas = data)
+    this.dbService.getRecurso('salas').then(data => (this.salas = data));
 
-    this.dbService.getRecurso('usuarios')
-    .then(data => this.usuarios = data)
-
-    
-  } 
-
+    this.dbService.getRecurso('usuarios').then(data => (this.usuarios = data));
+  }
 }

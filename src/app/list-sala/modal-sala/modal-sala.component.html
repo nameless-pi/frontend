@@ -21,7 +21,7 @@
       
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" [disabled]="!formModalSala.valid">{{ mode }}</button>
-        <button class="btn btn-default" (click)="btn=false;close()" >Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="close()" >Cancelar</button>
       </div>
     </form>
   </div>

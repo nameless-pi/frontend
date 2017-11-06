@@ -5,7 +5,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 
 import { DatabaseService } from '../../servicos/database.service';
-import {Observable} from 'rxjs/Observable';
+
 export interface ConfirmModel {
   title: string;
   user: any;
@@ -20,16 +20,20 @@ export interface ConfirmModel {
   styleUrls: ['./modal-user.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel, OnInit {
+export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
+  implements ConfirmModel, OnInit {
   title: string;
   user: any;
-  btn = false;
   salas = [];
   body = {};
   users: any[];
   mode: string;
   index: any;
-  dropdownSettings: {text: string; selectAllText: string; unSelectAllText: string; };
+  dropdownSettings: {
+    text: string;
+    selectAllText: string;
+    unSelectAllText: string;
+  };
   dropdownList = [];
   selectedItems = [];
   typeUsers = ['Aluno', 'Professor', 'Servente'];
@@ -54,14 +58,23 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
     }
   }
 
+  private kickUser() {
+    localStorage.removeItem('token');
+    this.router
+      .navigate([''])
+      .then(() => this.close())
+      .then(() => alert('Sua sessão expirou, logue novamente!'));
+  }
+
   fillSelect() {
-    this.dbService.getSalasSelect()
+    this.dbService
+      .getSalasSelect()
       .then(data => {
         for (let i = 0; i < data.length; i++) {
           this.dropdownList.push({
-            'id': i + 1,
-            'itemName': data[i].nome,
-            'id_sala': data[i].id
+            id: i + 1,
+            itemName: data[i].nome,
+            id_sala: data[i].id
           });
         }
       })
@@ -71,52 +84,65 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
   setBeforeSelectedSalas() {
     for (let i = 0; i < this.user.direito_acesso.length; i++) {
       this.selectedItems.push({
-        'id': i + 1,
-        'itemName': this.user.direito_acesso[i].nome_sala,
-        'id_sala': this.user.direito_acesso[i].id_sala
-       });
+        id: i + 1,
+        itemName: this.user.direito_acesso[i].nome_sala,
+        id_sala: this.user.direito_acesso[i].id_sala
+      });
     }
   }
 
   onSubmit(form) {
-    if (form.valid && !this.btn) {
+    if (form.valid) {
       const user = form.value;
       for (let i = 0; i < this.selectedItems.length; i++) {
         this.salas.push({
-          'id_sala': this.selectedItems[i].id_sala
+          id_sala: this.selectedItems[i].id_sala
         });
       }
       this.body = {
-        'nome': user.nome,
-        'tipo': user.tipo,
-        'email': user.email,
-        'rfid': user.rfid,
-        'direito_acesso': this.salas
+        nome: user.nome,
+        tipo: user.tipo,
+        email: user.email,
+        rfid: user.rfid,
+        direito_acesso: this.salas
       };
 
       this.selectedItems = [];
-      this.salas  = [];
+      this.salas = [];
 
       if (this.mode === 'Editar') {
-        this.dbService.editarRecurso('usuarios', user.id, this.body)
-        .then(res => {
-          alert('Usuário alterado com Sucesso!');
-          this.user = res;
-          this.users[this.index] = this.user;
-          this.close();
-        })
-        .catch(err => this.handleError(err.status));
+        const request = this.dbService.editarRecurso(
+          'usuarios',
+          user.id,
+          this.body
+        );
+        if (request) {
+          request
+            .then(res => {
+              alert('Usuário alterado com Sucesso!');
+              this.user = res;
+              this.users[this.index] = this.user;
+              this.close();
+            })
+            .catch(err => this.handleError(err.status));
+        } else {
+          this.kickUser();
+        }
       } else {
-        this.dbService.criarRecurso('usuarios', this.body)
-        .then(res => {
-          this.users.push(res);
-          alert('Usuário criado com Sucesso!');
-          this.close();
-        })
-        .catch(err => this.handleError(err.status));
+        const request = this.dbService.criarRecurso('usuarios', this.body);
+        if (request) {
+          request
+            .then(res => {
+              this.users.push(res);
+              alert('Usuário criado com Sucesso!');
+              this.close();
+            })
+            .catch(err => this.handleError(err.status));
+        } else {
+          this.kickUser();
+        }
       }
     }
-
   }
 
   private handleError(error: number) {
@@ -127,10 +153,9 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean> i
     } else if (error === 401) {
       this.close();
       localStorage.removeItem('token');
-      this.router.navigate([''])
-        .then(() => {
-          alert('Credenciais inválidas');
-        });
+      this.router.navigate(['']).then(() => {
+        alert('Credenciais inválidas');
+      });
     } else if (error === 404) {
       alert('Este usuário não existe!');
     } else if (error === 0) {

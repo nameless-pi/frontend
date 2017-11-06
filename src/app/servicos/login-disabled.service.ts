@@ -4,7 +4,6 @@ import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
 export class LoginDisabledService implements CanActivate {
-
   constructor(private router: Router, private jwtHelper: JwtHelper) {}
 
   canActivate() {

@@ -17,7 +17,10 @@ export class LoginComponent implements OnInit {
 
   async onSubmit(fLogin) {
     if (fLogin.valid) {
-      this.bool = await this.loginService.login(fLogin.value.login, fLogin.value.password);
+      this.bool = await this.loginService.login(
+        fLogin.value.login,
+        fLogin.value.password
+      );
       if (this.bool) {
         this.router.navigate(['/home']);
       }
@@ -27,7 +30,8 @@ export class LoginComponent implements OnInit {
 
   handlePassword() {
     const inputType = this.passwdInput.nativeElement.children[0];
-    const icon = this.passwdInput.nativeElement.children[1].children[0].children[0];
+    const icon = this.passwdInput.nativeElement.children[1].children[0]
+      .children[0];
     if (inputType.type === 'text') {
       inputType.type = 'password';
       icon.className = 'glyphicon glyphicon-eye-open';

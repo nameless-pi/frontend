@@ -6,12 +6,9 @@ import { LoginService } from '../servicos/login.service';
 import { LoginComponent } from './login.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  imports: [CommonModule, FormsModule],
   declarations: [LoginComponent],
   exports: [LoginComponent],
   providers: [LoginService]
 })
-export class LoginModule { }
+export class LoginModule {}

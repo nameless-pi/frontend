@@ -17,12 +17,13 @@ export class ListUserComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private dialogService: DialogService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.dbService.getRecurso('usuarios')
-      .then(data => this.users = data)
+    this.dbService
+      .getRecurso('usuarios')
+      .then(data => (this.users = data))
       .catch(err => this.handleError(err.status));
   }
 
@@ -31,8 +32,8 @@ export class ListUserComponent implements OnInit {
       this.dbService
         .deletarRecurso('usuarios', this.users[id].id)
         .then(res => {
-            this.users.splice(id, 1);
-            alert('Usuário Apagado com Sucesso!!');
+          this.users.splice(id, 1);
+          alert('Usuário Apagado com Sucesso!!');
         })
         .catch(err => this.handleError(err.status));
     }
@@ -57,24 +58,33 @@ export class ListUserComponent implements OnInit {
   }
 
   showModal(index, mode = 'Editar') {
-    const disposable = this.dialogService.addDialog(ModalUserComponent, {
+    if (this.dbService.checkToken()) {
+      localStorage.removeItem('token');
+      this.router
+        .navigate([''])
+        .then(() => alert('Sua sessão expirou, logue novamente!'));
+      return;
+    }
+    const disposable = this.dialogService
+      .addDialog(ModalUserComponent, {
         title: 'Usuário - ' + mode,
         user: index >= 0 ? this.users[index] : {},
         mode: mode,
         users: this.users,
         index: index
       })
-        .subscribe((isConfirmed) => {});
+      .subscribe(isConfirmed => {});
   }
 
   deletarTodos() {
     if (confirm('Deseja realmente apagar todos usuários?')) {
-      this.dbService.deletarTodosRecursos('usuarios')
-      .then(res => {
+      this.dbService
+        .deletarTodosRecursos('usuarios')
+        .then(res => {
           alert('Todos usuários apagados com sucesso!');
           this.users = [];
-      })
-      .catch(err => this.handleError(err.status));
+        })
+        .catch(err => this.handleError(err.status));
     }
   }
 
@@ -85,10 +95,9 @@ export class ListUserComponent implements OnInit {
       alert('Ops, há algo errado nesta página ou configurações do servidor');
     } else if (error === 401) {
       localStorage.removeItem('token');
-      this.router.navigate([''])
-        .then(() => {
-          alert('Credenciais inválidas');
-        });
+      this.router.navigate(['']).then(() => {
+        alert('Credenciais inválidas');
+      });
     } else if (error === 404) {
       alert('Este usuário não existe!');
     } else if (error === 0) {

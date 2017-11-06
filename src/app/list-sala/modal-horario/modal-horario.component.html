@@ -22,11 +22,6 @@
             [ngModel]="horario.hora_inicio"/>
         </div>
 
-        <!-- REMOVER -->
-        <div class="form-group">
-          <timepicker [(ngModel)]="myTime" [showMeridian]="ismeridian"></timepicker>          
-        </div>
-
         <div class="form-group">            
           <label>Horário Fim</label>
           <input name="horarioFim" class="form-control" 
@@ -49,7 +44,7 @@
       
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" [disabled]="!formModalHora.valid">{{ buttonText }}</button>
-        <button class="btn btn-danger" (click)="close(); btn = false" >Cancelar</button>
+        <button class="btn btn-danger" (click)="close()" >Cancelar</button>
       </div>
     </form>
   </div>

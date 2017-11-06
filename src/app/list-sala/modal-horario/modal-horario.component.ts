@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { DatabaseService } from './../../servicos/database.service';
-import { Observable } from 'rxjs/Observable';
 
 export interface ConfirmModel {
   title: string;
@@ -19,7 +18,10 @@ export interface ConfirmModel {
   styleUrls: ['./modal-horario.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean> implements ConfirmModel, OnInit {
+export class ModalHorarioComponent extends DialogComponent<
+  ConfirmModel,
+  boolean
+> implements ConfirmModel, OnInit {
   title: string;
   tipo: string;
   buttonText: string;
@@ -30,7 +32,6 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
 
   typeUsers = ['Aluno', 'Professor', 'Servente'];
   dias = ['Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo'];
-  btn = true;
   body = {};
 
   myTime = new Date();
@@ -48,49 +49,64 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
     this.horario = this.index !== undefined ? this.horarios[this.index] : {};
   }
 
+  private kickUser() {
+    localStorage.removeItem('token');
+    this.router
+      .navigate([''])
+      .then(() => this.close())
+      .then(() => alert('Sua sessão expirou, logue novamente!'));
+  }
+
   onSubmit(formModalHora) {
     if (formModalHora.value.horarioFim < formModalHora.value.horarioInicio) {
-        alert ('Horário inválido, tente novamente!');
-        this.btn = false;
-        this.close();
+      alert('Horário inválido, tente novamente!');
+      return;
     }
-    if (formModalHora.touched && formModalHora.valid && formModalHora.dirty && this.btn === true) {
+    if (formModalHora.valid) {
       this.body = {
-        'hora_inicio' : formModalHora.value.horarioInicio,
-        'hora_fim' : formModalHora.value.horarioFim,
-        'dia' : formModalHora.value.dia,
-        'id_sala': this.salaId,
-        'tipo_user' : formModalHora.value.tipo
+        hora_inicio: formModalHora.value.horarioInicio,
+        hora_fim: formModalHora.value.horarioFim,
+        dia: formModalHora.value.dia,
+        id_sala: this.salaId,
+        tipo_user: formModalHora.value.tipo
       };
 
       if (this.tipo === 'editar') {
         this.editarHorario(this.horario.id, this.body);
       } else if (this.tipo === 'novo') {
         this.cadastrarHorario(this.body);
-        this.horario.push(this.body);
       }
     }
   }
 
   cadastrarHorario(body) {
-    this.dbService.criarRecurso('horarios', body)
-      .then(res => {
-        alert('Horário cadastrado com sucesso');
-        this.horarios.push(res);
-        this.close();
-      })
-      .catch(err => this.handleError(err.status));
+    const request = this.dbService.criarRecurso('horarios', body);
+    if (request) {
+      request
+        .then(res => {
+          alert('Horário cadastrado com sucesso');
+          this.horarios.push(res);
+          this.close();
+        })
+        .catch(err => this.handleError(err.status));
+    } else {
+      this.kickUser();
+    }
   }
 
   editarHorario(id, body) {
-    this.dbService
-      .editarRecurso('horarios', id, body)
-      .then(res => {
-        alert('Horário alterado com sucesso!');
-        this.horarios[this.index] = res;
-        this.close();
-      })
-      .catch(err => this.handleError(err.status));
+    const request = this.dbService.editarRecurso('horarios', id, body);
+    if (request) {
+      request
+        .then(res => {
+          alert('Horário alterado com sucesso!');
+          this.horarios[this.index] = res;
+          this.close();
+        })
+        .catch(err => this.handleError(err.status));
+    } else {
+      this.kickUser();
+    }
   }
 
   private handleError(error: number) {
@@ -101,10 +117,9 @@ export class ModalHorarioComponent extends DialogComponent<ConfirmModel, boolean
     } else if (error === 401) {
       this.close();
       localStorage.removeItem('token');
-      this.router.navigate([''])
-        .then(() => {
-          alert('Credenciais inválidas');
-        });
+      this.router.navigate(['']).then(() => {
+        alert('Credenciais inválidas');
+      });
     } else if (error === 404) {
       alert('Este horário não existe!');
     } else if (error === 0) {

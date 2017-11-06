@@ -16,31 +16,34 @@ export class LoginService {
   }
 
   private authHttpServiceFactory(http: Http) {
-    return new AuthHttp(new AuthConfig({
-      tokenName: 'token',
-      headerPrefix: 'JWT',
-      tokenGetter: (() => localStorage.getItem('token')),
-      globalHeaders: [
-        {'Content-Type': 'application/json'},
-        {'Access-Control-Allow-Origin': '*'}
-      ],
-    }), http);
+    return new AuthHttp(
+      new AuthConfig({
+        tokenName: 'token',
+        headerPrefix: 'JWT',
+        tokenGetter: () => localStorage.getItem('token'),
+        globalHeaders: [
+          { 'Content-Type': 'application/json' },
+          { 'Access-Control-Allow-Origin': '*' }
+        ]
+      }),
+      http
+    );
   }
 
   async login(username, password) {
     await this.http
       .post(`${APP_SERVER}/auth`, {
-        'username': username,
-        'password': password
+        username: username,
+        password: password
       })
       .toPromise()
-      .then((data) => {
+      .then(data => {
         const json = data.json();
         const token = json.access_token;
         localStorage.setItem('token', token);
         return true;
       })
-      .catch((error) => {
+      .catch(error => {
         return false;
       });
     return true;

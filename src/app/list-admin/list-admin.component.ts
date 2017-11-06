@@ -1,11 +1,10 @@
-import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
-import {Component, OnInit} from '@angular/core';
-import {DialogService} from 'ng2-bootstrap-modal/dist';
+import { Component, OnInit } from '@angular/core';
+import { DialogService } from 'ng2-bootstrap-modal/dist';
 
-import {DatabaseService} from '../servicos/database.service';
-import {ModalAdminComponent} from './modal-admin/modal-admin.component';
+import { DatabaseService } from '../servicos/database.service';
+import { ModalAdminComponent } from './modal-admin/modal-admin.component';
 
 @Component({
   selector: 'app-list-admin',
@@ -22,12 +21,20 @@ export class ListAdminComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dbService.getRecurso('admins')
-      .then(res => this.admins = res)
+    this.dbService
+      .getRecurso('admins')
+      .then(res => (this.admins = res))
       .catch(err => this.handleError(err.status));
   }
 
   showModal(index, mode = 'Editar') {
+    if (this.dbService.checkToken()) {
+      localStorage.removeItem('token');
+      this.router
+        .navigate([''])
+        .then(() => alert('Sua sessão expirou, logue novamente!'));
+      return;
+    }
     const disposable = this.dialogService
       .addDialog(ModalAdminComponent, {
         title: 'Administrador - ' + mode,
@@ -42,17 +49,16 @@ export class ListAdminComponent implements OnInit {
   apagarAdmin(index) {
     const { id } = this.admins[index];
     if (confirm('Você deseja apagar este administrador?')) {
-      this.dbService.deletarRecurso('admins', id)
-        .then(() => {
-          const token = localStorage.getItem('token');
-          const { identity } = this.jwtHelper.decodeToken(token);
-          alert('Administrador removido com sucesso!');
-          this.admins.splice(index, 1);
-          if (identity === id) {
-            localStorage.setItem('flag', 'MnsyBscAShMB251Sz%3');
-            localStorage.removeItem('token');
-          }
-        });
+      this.dbService.deletarRecurso('admins', id).then(() => {
+        const token = localStorage.getItem('token');
+        const { identity } = this.jwtHelper.decodeToken(token);
+        alert('Administrador removido com sucesso!');
+        this.admins.splice(index, 1);
+        if (identity === id) {
+          localStorage.setItem('flag', 'MnsyBscAShMB251Sz%3');
+          localStorage.removeItem('token');
+        }
+      });
     }
   }
 
@@ -63,10 +69,9 @@ export class ListAdminComponent implements OnInit {
       alert('Ops, há algo errado nesta página ou configurações do servidor');
     } else if (error === 401) {
       localStorage.removeItem('token');
-      this.router.navigate([''])
-        .then(() => {
-          alert('Credenciais inválidas');
-        });
+      this.router.navigate(['']).then(() => {
+        alert('Credenciais inválidas');
+      });
     } else if (error === 404) {
       alert('Este administrador não existe!');
     } else if (error === 0) {

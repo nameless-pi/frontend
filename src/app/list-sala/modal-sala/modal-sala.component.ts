@@ -23,7 +23,6 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
   sala: any;
   salas: any[];
   mode: string;
-  btn = true;
 
   constructor(
     dialogService: DialogService,
@@ -35,8 +34,16 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
 
   ngOnInit() {}
 
+  private kickUser() {
+    localStorage.removeItem('token');
+    this.router
+      .navigate([''])
+      .then(() => this.close())
+      .then(() => alert('Sua sessão expirou, logue novamente!'));
+  }
+
   onSubmit(formModalSala) {
-    if (formModalSala.touched && formModalSala.valid && formModalSala.dirty && this.btn === true ) {
+    if (formModalSala.valid) {
       this.sala.nome = formModalSala.value.nome_sala;
       this.alterarSala(this.sala);
     }
@@ -44,21 +51,34 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
 
   alterarSala(sala) {
     if (this.mode === 'Editar') {
-      this.dbService
-      .editarRecurso('salas', sala.id, {'nome': this.sala.nome})
-      .then(res => {
-        alert('Sala alterada com sucesso!');
-        this.close();
-      })
-      .catch(err => this.handleError(err.status));
+      const request = this.dbService.editarRecurso('salas', sala.id, {
+        nome: this.sala.nome
+      });
+      if (request) {
+        request
+          .then(res => {
+            alert('Sala alterada com sucesso!');
+            this.close();
+          })
+          .catch(err => this.handleError(err.status));
+      } else {
+        this.kickUser();
+      }
     } else {
-      this.dbService.criarRecurso('salas', {'nome': this.sala.nome})
-      .then(res => {
-        alert('Sala criada com sucesso!');
-        this.salas.push(res);
-        this.close();
-      })
-      .catch(err => this.handleError(err.status));
+      const request = this.dbService.criarRecurso('salas', {
+        nome: this.sala.nome
+      });
+      if (request) {
+        request
+          .then(res => {
+            alert('Sala criada com sucesso!');
+            this.salas.push(res);
+            this.close();
+          })
+          .catch(err => this.handleError(err.status));
+      } else {
+        this.kickUser();
+      }
     }
   }
 
@@ -70,10 +90,9 @@ export class ModalSalaComponent extends DialogComponent<ConfirmModel, boolean>
     } else if (error === 401) {
       this.close();
       localStorage.removeItem('token');
-      this.router.navigate([''])
-        .then(() => {
-          alert('Credenciais inválidas');
-        });
+      this.router.navigate(['']).then(() => {
+        alert('Credenciais inválidas');
+      });
     } else if (error === 404) {
       alert('Esta sala não existe!');
     } else if (error === 0) {
