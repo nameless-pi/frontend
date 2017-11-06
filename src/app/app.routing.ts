@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ListSalaComponent } from './list-sala/list-sala.component';
 import { ListUserComponent } from './list-user/list-user.component';
 import { PaginaErroComponent } from './pagina-erro/pagina-erro.component';
+import { PesquisaComponent } from './pesquisa/pesquisa.component';
 
 import { AuthGuardService } from './servicos/auth-guard.service';
 import { ModuleWithProviders } from '@angular/core';
@@ -17,6 +18,7 @@ const APP_ROUTERS: Routes = [
   { path: 'cadastro-adm', component: ListAdminComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-sala', component: ListSalaComponent, canActivate: [AuthGuardService] },
   { path: 'cadastro-usuario', component: ListUserComponent, canActivate: [AuthGuardService] },
+  { path: 'respesquisa', component: PesquisaComponent, canActivate: [AuthGuardService]},
   { path: '' , component: LoginComponent, canActivate: [LoginDisabledService]},
   { path: '**' , component: PaginaErroComponent, canActivate: [AuthGuardService]}
 ];

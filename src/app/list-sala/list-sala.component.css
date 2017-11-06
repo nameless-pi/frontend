@@ -6,8 +6,10 @@
 }
 
 .horario_sala{
-    /*border-left: 1px solid #ccc;*/
+    border-left: 1px solid #ccc;
+    margin-left: -1px;
 }
+
 
 .layer_sala{
     border-right: 1px solid #ccc;

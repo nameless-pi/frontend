@@ -24,12 +24,14 @@ import { LoginService } from './servicos/login.service';
 import { DatabaseService } from './servicos/database.service';
 import { AuthGuardService } from './servicos/auth-guard.service';
 import { LoginDisabledService } from './servicos/login-disabled.service';
+import { PesquisaComponent } from './pesquisa/pesquisa.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PaginaErroComponent,
+    PesquisaComponent,
   ],
   imports: [
     routing,

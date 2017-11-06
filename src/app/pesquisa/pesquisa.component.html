@@ -1,0 +1,26 @@
+<app-home></app-home>
+
+<div class="container row">
+    <div ng-controller="List" style="margin-left: 70px; margin-top: 10px;">
+        <input class="barra-pesquisa" ng-model="test" type="text" #pesquisa tooltip="peguisar">
+        <button class="btn btn_pesquisa" tooltip="peguisar" (click)="onPesquisa(pesquisa.value)" >
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+        <h3>Resultados de Pesquisa</h3>
+        <ul class="ul-salas">
+          <li class="li-pesquisa" *ngFor="let sala of salas;"  routerLink="/cadastro-sala">
+            {{ (sala.nome==pesquisa.value ? sala.nome : '') }}</li>
+        </ul>
+
+        <ul class="ul-tipoUSer">
+          <li class="li-pesquisa" *ngFor="let user of usuarios;"  routerLink="/cadastro-usuario">
+            {{ (user.tipo==pesquisa.value ? user.nome : '') }}</li>
+        </ul>
+
+        <ul class="ul-user">
+          <li class="li-pesquisa" *ngFor="let user of usuarios;" routerLink="/cadastro-usuario">
+            {{ (user.nome==pesquisa.value ? user.nome : '') }}</li>
+        </ul>
+    </div>
+</div>
+

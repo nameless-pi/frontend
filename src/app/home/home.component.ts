@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HomeComponent implements OnInit {
-  constructor(private router: Router) {}
+  
+  constructor(
+    private router: Router) { }
   ngOnInit() {}
 
   clearToken() {
@@ -16,4 +18,6 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('flag');
     this.router.navigate(['']);
   }
+
+  
 }

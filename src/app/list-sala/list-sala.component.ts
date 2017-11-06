@@ -96,7 +96,7 @@ export class ListSalaComponent implements OnInit {
     }
 
   deletarHorario(id, id_horario) {
-    console.log(id);
+    //console.log(id);
     if (confirm('Você realmente deseja apagar este horário?')) {
       this.dbService
         .deletarRecurso('horarios', id_horario)

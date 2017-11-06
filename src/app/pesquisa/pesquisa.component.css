@@ -1,0 +1,32 @@
+.container{
+    margin-top: 15px;
+    border: 0px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.li-pesquisa{
+    list-style:none;
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+    font-size: 18px;
+    width: auto;
+    text-align: left;
+    margin-left: 260px;
+    
+}
+
+.barra-pesquisa{
+    width: 450px;
+    border-radius: 3px; 
+    border: 1px solid #ccc;
+}
+
+
+.btn_pesquisa{
+    width: 25px;
+    height: 22px;
+    padding: 1px;
+    margin-top: -3px;
+}
