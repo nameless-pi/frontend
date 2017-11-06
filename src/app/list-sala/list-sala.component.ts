@@ -55,7 +55,7 @@ export class ListSalaComponent implements OnInit {
       this.dbService
         .deletarRecurso('salas', this.salas[index].id)
         .then(res => {
-          alert('Sala Excluida com Sucesso!');
+          alert('Sala excluída com sucesso!');
           this.salas.splice(index, 1);
           this.id = -1;
         })
@@ -125,7 +125,7 @@ export class ListSalaComponent implements OnInit {
       this.dbService
         .deletarRecurso('horarios', id_horario)
         .then(res => {
-          alert('Hoario Excluido com Sucesso!');
+          alert('Horário excluído com sucesso!');
           this.salas[this.id].horarios.splice(id, 1);
         })
         .catch(err => this.handleError('Horário', err.status));
@@ -140,7 +140,7 @@ export class ListSalaComponent implements OnInit {
       this.dbService
         .deletarRecurso('salas/horarios', this.salas[id].id)
         .then(res => {
-          alert('Todos Horários Excluidos Com Sucesso!');
+          alert('Todos horários excluídos com sucesso!');
           this.salas[id].horarios = [];
         })
         .catch(err => this.handleError('Horário', err.status));
@@ -151,7 +151,7 @@ export class ListSalaComponent implements OnInit {
       this.dbService
         .deletarTodosRecursos(recurso)
         .then(res => {
-          alert('Salas Excluidas Com Sucesso!');
+          alert('Salas excluídas com sucesso!');
           this.salas = [];
         })
         .catch(err => this.handleError('Sala', err.status));
