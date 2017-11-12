@@ -81,10 +81,19 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
       .catch(err => this.handleError(err.status));
   }
 
+  private findIndex(obj) {
+    for (let i = 0; i < this.dropdownList.length; i++) {
+      if (this.dropdownList[i].itemName === obj) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   setBeforeSelectedSalas() {
     for (let i = 0; i < this.user.direito_acesso.length; i++) {
       this.selectedItems.push({
-        id: i + 1,
+        id: this.findIndex(this.user.direito_acesso[i].nome_sala),
         itemName: this.user.direito_acesso[i].nome_sala,
         id_sala: this.user.direito_acesso[i].id_sala
       });
@@ -119,7 +128,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
         if (request) {
           request
             .then(res => {
-              alert('Usuário alterado com Sucesso!');
+              alert('Usuário alterado com sucesso!');
               this.user = res;
               this.users[this.index] = this.user;
               this.close();
@@ -134,7 +143,7 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
           request
             .then(res => {
               this.users.push(res);
-              alert('Usuário criado com Sucesso!');
+              alert('Usuário criado com sucesso!');
               this.close();
             })
             .catch(err => this.handleError(err.status));

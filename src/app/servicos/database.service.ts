@@ -23,6 +23,7 @@ export class DatabaseService {
 
   private kickUser() {
     localStorage.removeItem('token');
+    localStorage.removeItem('flag');
     this.router
       .navigate([''])
       .then(() => alert('Sua sessão expirou, logue novamente!'));
@@ -41,6 +42,16 @@ export class DatabaseService {
       }),
       this.http
     );
+  }
+
+  pesquisar(body) {
+    if (!this.checkToken()) {
+      return this.authHttp.post(`${APP_SERVER}/pesquisa`, body)
+        .map(res => res.json())
+        .toPromise();
+    } else {
+      this.kickUser();
+    }
   }
 
   getRecurso(recurso) {
@@ -121,6 +132,9 @@ export class DatabaseService {
   }
 
   checkToken() {
+    if (localStorage.getItem('flag')) {
+      return true;
+    }
     return this.jwtHelper.isTokenExpired(this.getToken());
   }
 }

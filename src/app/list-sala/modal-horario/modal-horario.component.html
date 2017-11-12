@@ -9,7 +9,7 @@
       <div class="modal-body">
         <div class="form-group"> 
           <label>Dia da Semana:</label>
-            <select name="dia" class="form-control" [ngModel]="horario.dia" style="width: 150px">
+            <select name="dia" class="form-control" [ngModel]="horario.dia" style="width: 150px" required>
               <option style="text-transform: capitalize" *ngFor="let dia of dias" [value]="dia">{{ dia }}</option>
             </select>
         </div>

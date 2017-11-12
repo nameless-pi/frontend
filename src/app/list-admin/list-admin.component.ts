@@ -30,6 +30,7 @@ export class ListAdminComponent implements OnInit {
   showModal(index, mode = 'Editar') {
     if (this.dbService.checkToken()) {
       localStorage.removeItem('token');
+      localStorage.removeItem('flag');
       this.router
         .navigate([''])
         .then(() => alert('Sua sessão expirou, logue novamente!'));
@@ -47,6 +48,14 @@ export class ListAdminComponent implements OnInit {
   }
 
   apagarAdmin(index) {
+    if (this.dbService.checkToken()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('flag');
+      this.router
+        .navigate([''])
+        .then(() => alert('Sua sessão expirou, logue novamente!'));
+      return;
+    }
     const { id } = this.admins[index];
     if (confirm('Você deseja apagar este administrador?')) {
       this.dbService.deletarRecurso('admins', id).then(() => {

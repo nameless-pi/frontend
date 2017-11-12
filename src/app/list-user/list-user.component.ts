@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ListUserComponent implements OnInit {
   users: any = [];
+  options = ['Nome', 'Sala', 'Tipo'];
 
   constructor(
     private dbService: DatabaseService,
@@ -103,5 +104,21 @@ export class ListUserComponent implements OnInit {
     } else if (error === 0) {
       alert('Erro de conexão, tente novamente!');
     }
+  }
+
+  onSubmit(form) {
+    const { query, filter } = form.value;
+    const body = {
+      query, filter
+    };
+
+    console.log(body);
+    this.dbService.pesquisar(body)
+    .then(res => this.users = res)
+    .catch(err => {
+      if (err.status === 404) {
+        alert('Esta sala não existe!');
+      }
+    });
   }
 }
