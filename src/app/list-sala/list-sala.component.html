@@ -1,5 +1,30 @@
 <app-home></app-home>
 
+
+<div class="container" style="border: none">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-inline" style="margin-left: 20%">
+    <div class="input-group">
+      <span class="input-group-btn">
+        <select class="form-control" style="width: 90px" 
+          required name="filter" [ngModel]="undefined">
+          <option value="undefined" disabled selected hidden>Filtro</option>
+          <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+        </select>
+      </span>
+      <span class="input-group-btn">
+        <input class="form-control" style="width: 400px" name="query"
+          ngModel required pattern="^[\w\s-]+$"          
+          placeholder="Pesquisar"/>
+      </span>
+      <span class="input-group-btn">
+        <button class="btn btn-primary" [disabled]="!f.valid"  tooltip="Pesquisar">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
+    </div>
+  </form>
+</div>
+
 <div class="container row">
   <div class="layer_sala col-md-3">
     <h3>Salas 

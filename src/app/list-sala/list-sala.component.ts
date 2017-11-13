@@ -16,6 +16,7 @@ export class ListSalaComponent implements OnInit {
   @ViewChild('button') btn: ElementRef;
   id = -1;
   salas: any = [];
+  options = ['Dia'];
 
   constructor(
     private dbService: DatabaseService,
@@ -48,6 +49,23 @@ export class ListSalaComponent implements OnInit {
     } else {
       this.id = idx;
     }
+  }
+
+  onSubmit(form) {
+    const { query, filter } = form.value;
+    const body = {
+      query, filter
+    };
+
+    console.log(body);
+    this.dbService.pesquisarSala(body)
+    .then(res => this.salas = res)
+    .catch(err => {
+      if (err.status === 404) {
+        alert('Não Existe Sala com Horário Neste Dis!');
+      }
+    });
+    console.log(this.salas);
   }
 
   deletarSala(index) {

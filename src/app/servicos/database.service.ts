@@ -54,6 +54,15 @@ export class DatabaseService {
     }
   }
 
+  pesquisarSala(body) {
+    if (!this.checkToken()) {
+      return this.authHttp.post(`${APP_SERVER}/pesquisalas`, body)
+      .map(res => res.json())
+      .toPromise();
+    } else {
+      this.kickUser();
+    }
+  }
   getRecurso(recurso) {
     if (!this.checkToken()) {
       return this.authHttp
