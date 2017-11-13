@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { DropdownSettings } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown/multiselect.interface';
+import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
@@ -38,6 +39,31 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
   selectedItems = [];
   typeUsers = ['Aluno', 'Professor', 'Servente'];
 
+  // Settings configuration
+  mySettings: IMultiSelectSettings = {
+    showCheckAll: true,
+    showUncheckAll: true,
+    isLazyLoad: true,
+    buttonClasses: 'btn btn-default btn-block',
+    dynamicTitleMaxItems: 6,
+    displayAllSelectedText: true,
+    maxHeight: '200px'
+  };
+
+  // Text configuration
+  myTexts: IMultiSelectTexts = {
+    checkAll: 'Marcar todas',
+    uncheckAll: 'Desmarcar todas',
+    checked: 'Sala selecionada!',
+    checkedPlural: 'Salas selecionadas!',
+    defaultTitle: 'Selecione as salas',
+    allSelected: 'Todas selecionadas!',
+  };
+
+  // Labels / Parents
+  myOptions: IMultiSelectOption[] = [];
+  optionsModel = [];
+
   constructor(
     private dbService: DatabaseService,
     dialogService: DialogService,
@@ -48,14 +74,6 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
 
   ngOnInit() {
     this.fillSelect();
-    this.dropdownSettings = {
-      text: 'Selecione as salas',
-      selectAllText: 'Todas',
-      unSelectAllText: 'Nenhuma'
-    };
-    if (this.user.direito_acesso) {
-      this.setBeforeSelectedSalas();
-    }
   }
 
   private kickUser() {
@@ -70,34 +88,19 @@ export class ModalUserComponent extends DialogComponent<ConfirmModel, boolean>
     this.dbService
       .getSalasSelect()
       .then(data => {
+        const select = [];
         for (let i = 0; i < data.length; i++) {
-          this.dropdownList.push({
-            id: i + 1,
-            itemName: data[i].nome,
-            id_sala: data[i].id
+          select.push({
+            id: data[i].id,
+            name: data[i].nome
           });
         }
+        this.myOptions = select;
+        this.user.direito_acesso.forEach(element => {
+          this.optionsModel.push(element.id_sala);
+        });
       })
       .catch(err => this.handleError(err.status));
-  }
-
-  private findIndex(obj) {
-    for (let i = 0; i < this.dropdownList.length; i++) {
-      if (this.dropdownList[i].itemName === obj) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  setBeforeSelectedSalas() {
-    for (let i = 0; i < this.user.direito_acesso.length; i++) {
-      this.selectedItems.push({
-        id: this.findIndex(this.user.direito_acesso[i].nome_sala),
-        itemName: this.user.direito_acesso[i].nome_sala,
-        id_sala: this.user.direito_acesso[i].id_sala
-      });
-    }
   }
 
   onSubmit(form) {

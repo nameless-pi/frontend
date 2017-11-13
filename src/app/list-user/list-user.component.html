@@ -54,7 +54,18 @@
         <td>{{ user.nome }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.rfid }}</td>
-        <td>{{ acessosTransform(user.direito_acesso) }}</td>
+        <td>
+          <div class="btn-group" dropdown [ngSwitch]="user.direito_acesso.length === 0">
+            <button class="btn btn-default" *ngSwitchCase="true">Nenhuma</button>
+            <button *ngSwitchDefault dropdownToggle type="button" class="btn btn-default dropdown-toggle">
+              Ver salas
+              <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li><a class="dropdown-item" *ngFor="let sala of user.direito_acesso">{{ sala.nome_sala }}</a></li>
+            </ul>
+          </div>
+        </td>
         <td>
           <button type="submit" class="btn btn-primary" (click)="showModal(idx)"
             tooltip="Editar usuário">

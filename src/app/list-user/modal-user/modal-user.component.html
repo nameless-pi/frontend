@@ -34,9 +34,11 @@
 
         <div class="form-group">
           <label>Salas Permitidas</label>
-          <angular2-multiselect [data]="dropdownList" [(ngModel)]="selectedItems"
-            [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings">
-          </angular2-multiselect>
+          <br/>
+          <ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts"
+            [ngModelOptions]="{standalone: true}" [settings]="mySettings" 
+            [(ngModel)]="optionsModel">
+          </ss-multiselect-dropdown>
         </div>
 
         <div class=" form-group">

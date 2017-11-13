@@ -40,24 +40,6 @@ export class ListUserComponent implements OnInit {
     }
   }
 
-  acessosTransform(acessos: any[]) {
-    const tamanho = acessos.length;
-    if (!tamanho) {
-      return 'Nenhuma';
-    } else if (tamanho > 4) {
-      return tamanho + ' salas';
-    }
-
-    let acessosT = '[';
-
-    for (let i = 0; i < tamanho - 1; i++) {
-      acessosT += acessos[i].nome_sala + ', ';
-    }
-
-    acessosT += acessos[tamanho - 1].nome_sala + ']';
-    return acessosT;
-  }
-
   showModal(index, mode = 'Editar') {
     if (this.dbService.checkToken()) {
       localStorage.removeItem('token');
